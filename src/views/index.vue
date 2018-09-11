@@ -1,8 +1,10 @@
 <template>
     <div id="index">
         <v-app light>
-            <v-toolbar class="white">
-                <v-toolbar-title v-text="title"></v-toolbar-title>
+            <v-toolbar class="primary white--text">
+                <v-toolbar-title>
+                    Primasakti
+                </v-toolbar-title>
             </v-toolbar>
             <v-content>
                 <section>
@@ -143,14 +145,11 @@
                         </v-layout>
                     </v-container>
                 </section>
-                <v-footer class="blue darken-2">
+                <v-footer class="secondary white--text">
                     <v-layout row wrap align-center>
                         <v-flex xs12>
-                            <div class="white--text ml-3">
-                                Made with
-                                <v-icon class="red--text">favorite</v-icon>
-                                by <a class="white--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>
-                                and <a class="white--text" href="https://github.com/vwxyzjn">Costa Huang</a>
+                            <div>
+                                &copy 2018 - UD. Primasakti - All Rights Reserved
                             </div>
                         </v-flex>
                     </v-layout>
