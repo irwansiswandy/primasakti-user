@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
 
-Vue.use(Vuex)
+import Core from './vuex_modules/core.js';
 
 export default new Vuex.Store({
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  }
-})
+    mutations: {
+        setState(state, [key, value]) {
+            return state[key] = value;
+        }
+    },
+    modules: {
+        Core
+    }
+});

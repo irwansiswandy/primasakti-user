@@ -14,6 +14,9 @@ Vue.use(Vuetify, {
     }
 });
 
+import I18n from 'vue-i18n';
+Vue.use(I18n);
+
 Vue.config.productionTip = false
 
 new Vue({

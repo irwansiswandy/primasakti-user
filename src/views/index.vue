@@ -5,10 +5,17 @@
                 <v-toolbar-title>
                     Primasakti
                 </v-toolbar-title>
+                <v-spacer></v-spacer>
+                <!-- Language options -->
+                <v-btn-toggle dark class="secondary" v-model="locale">
+                    <v-btn small flat>Indonesian</v-btn>
+                    <v-btn small flat>English</v-btn>
+                </v-btn-toggle>
+                <!-- /Language options -->
             </v-toolbar>
             <v-content>
                 <section>
-                    <v-parallax src="../assets/hero.jpeg" height="600">
+                    <v-parallax :src="images[0]" height="600">
                         <v-layout column align-center justify-center class="white--text">
                             <img src="../assets/vuetify.png" alt="Vuetify.js" height="200">
                             <h1 class="white--text mb-2 display-1 text-xs-center">Parallax Template</h1>
@@ -81,7 +88,7 @@
                     </v-layout>
                 </section>
                 <section>
-                    <v-parallax src="../assets/section.jpg" height="380">
+                    <v-parallax :src="images[1]" height="380">
                         <v-layout column align-center justify-center>
                             <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                             <em>Kick-start your application today</em>
@@ -109,7 +116,7 @@
                             <v-flex xs12 sm4 offset-sm1>
                                 <v-card class="elevation-0 transparent">
                                     <v-card-title primary-title class="layout justify-center">
-                                        <div class="headline">Contact us</div>
+                                        <div class="headline">Contact Us</div>
                                     </v-card-title>
                                     <v-card-text>
                                         Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -164,7 +171,23 @@
 </style>
 
 <script>
+    import ImageHero from '../assets/hero.jpeg';
+    import ImageSection from '../assets/section.jpg';
+    import { ServerURL } from '../_variables.js';
+
     export default {
-        name: 'index'
+        name: 'index',
+        data() {
+            return {
+                images: [
+                    ImageHero,
+                    ImageSection
+                ],
+                locale: ''
+            };
+        },
+        mounted() {
+            console.log(ServerURL);
+        }
     }
 </script>
