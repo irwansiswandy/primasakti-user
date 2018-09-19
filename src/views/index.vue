@@ -17,10 +17,12 @@
                 <section>
                     <v-parallax :src="images[0]" height="600">
                         <v-layout column align-center justify-center class="white--text">
-                            <img src="../assets/vuetify.png" alt="Vuetify.js" height="200">
+                            <img src="../assets/logo_primasakti.svg" alt="Vuetify.js" height="250">
+                            <!--
                             <h1 class="white--text mb-2 display-1 text-xs-center">Parallax Template</h1>
                             <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
-                            <v-btn class="blue lighten-2 mt-5" dark large href="/pre-made-themes">
+                            -->
+                            <v-btn class="secondary mt-5" dark large href="/pre-made-themes">
                                 Get Started
                             </v-btn>
                         </v-layout>
@@ -173,6 +175,7 @@
 <script>
     import ImageHero from '../assets/hero.jpeg';
     import ImageSection from '../assets/section.jpg';
+    import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
 
     export default {
@@ -181,7 +184,8 @@
             return {
                 images: [
                     ImageHero,
-                    ImageSection
+                    ImageSection,
+                    logoPrimasakti
                 ],
                 locale: ''
             };
