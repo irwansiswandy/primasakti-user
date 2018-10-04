@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
-import Core from './vuex_modules/core.js';
+import Locale from './vuex_modules/locale.js';
 
 export default new Vuex.Store({
     mutations: {
@@ -11,6 +11,6 @@ export default new Vuex.Store({
         }
     },
     modules: {
-        Core
+        Locale
     }
 });

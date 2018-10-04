@@ -1,4 +1,4 @@
-const VuexModuleCore = {
+const VuexModuleLocale = {
     state: {
         locale: 'en'
     },
@@ -8,10 +8,10 @@ const VuexModuleCore = {
         }
     },
     actions: {
-        set_core(context, [key, value]) {
+        set_locale(context, [key, value]) {
             return context.commit('setState', [key, value]);
         }
     }
 };
 
-export default VuexModuleCore;
+export default VuexModuleLocale;
