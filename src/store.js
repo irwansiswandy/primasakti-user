@@ -2,15 +2,15 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
-import Locale from './vuex_modules/locale.js';
+import Core from './vuex_modules/core.js';
 
 export default new Vuex.Store({
     mutations: {
-        setState(state, [key, value]) {
-            return state[key] = value;
+        setState(state, [module_name, key, value]) {
+            return state[module_name][key] = value;
         }
     },
     modules: {
-        Locale
+        'core': Core
     }
 });

@@ -2,16 +2,27 @@
     <div id="index">
         <v-app light>
             <v-toolbar class="primary white--text">
-                <v-toolbar-title>
-                    Primasakti
+                <v-toolbar-title class="text-xs-left">
+                    <div>Primasakti</div>
+                    <div class="caption">digital copy & print shop</div>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <!-- Language options -->
-                <v-btn-toggle dark class="secondary" v-model="locale">
-                    <v-btn small flat>Indonesian</v-btn>
+                <!-- Start: language toggle button -->
+                <v-btn-toggle dark mandatory class="secondary"
+                              v-model="locale_toggle_button_value">
+                    <v-btn small flat>Bahasa Indonesia</v-btn>
                     <v-btn small flat>English</v-btn>
                 </v-btn-toggle>
-                <!-- /Language options -->
+                <!-- End: language toggle button -->
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn flat dark>
+                        {{ $t('login') }}
+                    </v-btn>
+                    <v-btn flat dark>
+                        {{ $t('register') }}
+                    </v-btn>
+                </v-toolbar-items>
             </v-toolbar>
             <v-content>
                 <section>
@@ -154,6 +165,8 @@
                         </v-layout>
                     </v-container>
                 </section>
+                
+                <!-- Start: footer -->
                 <v-footer class="secondary white--text">
                     <v-layout row wrap align-center>
                         <v-flex xs12>
@@ -163,6 +176,8 @@
                         </v-flex>
                     </v-layout>
                 </v-footer>
+                <!-- End: footer -->
+
             </v-content>
         </v-app>
     </div>
@@ -177,6 +192,7 @@
     import ImageSection from '../assets/section.jpg';
     import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
+    import { mapGetters } from 'vuex';
 
     export default {
         name: 'index',
@@ -187,11 +203,46 @@
                     ImageSection,
                     logoPrimasakti
                 ],
-                locale: ''
+                locale_toggle_button_value: 0
             };
+        },
+        computed: {
+            ...mapGetters([
+                'locale'
+            ]),
+            selected_locale() {
+                if (this.locale_toggle_button_value == 0) {
+                    return 'id';
+                }
+                else if (this.locale_toggle_button_value == 1) {
+                    return 'en';
+                }
+            }
+        },
+        watch: {
+            'selected_locale'(value) {
+                return this.$store.dispatch('set_core', ['locale', value]);
+            },
+            'locale'(value) {
+                return this.$i18n.locale = value;
+            }
         },
         mounted() {
             console.log(ServerURL);
+            return this.$store.dispatch('set_core', ['locale', this.selected_locale]);
         }
     }
 </script>
+
+<i18n>
+{
+    "id": {
+        "login": "masuk",
+        "register": "daftar"
+    },
+    "en": {
+        "login": "login",
+        "register": "register"
+    }
+}
+</i18n>
