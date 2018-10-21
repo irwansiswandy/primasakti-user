@@ -7,21 +7,25 @@
                     <div class="caption">digital copy & print shop</div>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <!-- Start: language toggle button -->
-                <v-btn-toggle dark mandatory class="secondary"
-                              v-model="locale_toggle_button_value">
-                    <v-btn small flat>Bahasa Indonesia</v-btn>
-                    <v-btn small flat>English</v-btn>
-                </v-btn-toggle>
-                <!-- End: language toggle button -->
-                <v-spacer></v-spacer>
                 <v-toolbar-items>
-                    <v-btn flat dark>
-                        {{ $t('login') }}
-                    </v-btn>
                     <v-btn flat dark>
                         {{ $t('register') }}
                     </v-btn>
+                    <v-menu left offset-y :close-on-content-click="false">
+                        <v-btn flat dark slot="activator">
+                            {{ $t('login') }}
+                        </v-btn>
+                        <v-card>
+                            <v-card-text>
+                                <login-form></login-form>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn block color="secondary">
+                                    {{ $t('login') }}
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-menu>
                 </v-toolbar-items>
             </v-toolbar>
             <v-content>
@@ -166,6 +170,22 @@
                     </v-container>
                 </section>
                 
+                <!-- Start: language toggle button -->
+                <section>
+                    <v-container fluid>
+                        <v-layout row>
+                            <v-flex md12 class="text-xs-right">
+                                <v-btn-toggle dark mandatory class="tertiary"
+                                              v-model="locale_toggle_button_value">
+                                    <v-btn small flat>Bahasa Indonesia</v-btn>
+                                    <v-btn small flat>English</v-btn>
+                                </v-btn-toggle>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </section>
+                <!-- End: language toggle button -->
+
                 <!-- Start: footer -->
                 <v-footer class="secondary white--text">
                     <v-layout row wrap align-center>
@@ -193,6 +213,7 @@
     import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
+    import LoginForm from './authentication/login.vue';
 
     export default {
         name: 'index',
@@ -205,6 +226,9 @@
                 ],
                 locale_toggle_button_value: 0
             };
+        },
+        components: {
+            'login-form': LoginForm
         },
         computed: {
             ...mapGetters([
@@ -228,7 +252,6 @@
             }
         },
         mounted() {
-            console.log(ServerURL);
             return this.$store.dispatch('set_core', ['locale', this.selected_locale]);
         }
     }
