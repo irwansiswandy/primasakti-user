@@ -3,8 +3,7 @@
         <v-app light>
             <v-toolbar class="primary white--text">
                 <v-toolbar-title class="text-xs-left">
-                    <div>Primasakti</div>
-                    <div class="caption">digital copy & print shop</div>
+                    <h4>PRIMASAKTI</h4>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
@@ -15,15 +14,10 @@
                         <v-btn flat dark slot="activator">
                             {{ $t('login') }}
                         </v-btn>
-                        <v-card>
-                            <v-card-text>
+                        <v-card width="350">
+                            <v-card-text class="pa-4">
                                 <login-form></login-form>
                             </v-card-text>
-                            <v-card-actions>
-                                <v-btn block color="secondary">
-                                    {{ $t('login') }}
-                                </v-btn>
-                            </v-card-actions>
                         </v-card>
                     </v-menu>
                 </v-toolbar-items>
@@ -131,40 +125,7 @@
                                 </v-card>
                             </v-flex>
                             <v-flex xs12 sm4 offset-sm1>
-                                <v-card class="elevation-0 transparent">
-                                    <v-card-title primary-title class="layout justify-center">
-                                        <div class="headline">Contact Us</div>
-                                    </v-card-title>
-                                    <v-card-text>
-                                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                    </v-card-text>
-                                    <v-list class="transparent">
-                                        <v-list-tile>
-                                            <v-list-tile-action>
-                                                <v-icon class="blue--text text--lighten-2">phone</v-icon>
-                                            </v-list-tile-action>
-                                            <v-list-tile-content>
-                                                <v-list-tile-title>777-867-5309</v-list-tile-title>
-                                            </v-list-tile-content>
-                                        </v-list-tile>
-                                        <v-list-tile>
-                                            <v-list-tile-action>
-                                                <v-icon class="blue--text text--lighten-2">place</v-icon>
-                                            </v-list-tile-action>
-                                            <v-list-tile-content>
-                                                <v-list-tile-title>Chicago, US</v-list-tile-title>
-                                            </v-list-tile-content>
-                                        </v-list-tile>
-                                        <v-list-tile>
-                                            <v-list-tile-action>
-                                                <v-icon class="blue--text text--lighten-2">email</v-icon>
-                                            </v-list-tile-action>
-                                            <v-list-tile-content>
-                                                <v-list-tile-title>john@vuetifyjs.com</v-list-tile-title>
-                                            </v-list-tile-content>
-                                        </v-list-tile>
-                                    </v-list>
-                                </v-card>
+                                <view-contact-us></view-contact-us>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -177,8 +138,12 @@
                             <v-flex md12 class="text-xs-right">
                                 <v-btn-toggle dark mandatory class="tertiary"
                                               v-model="locale_toggle_button_value">
-                                    <v-btn small flat>Bahasa Indonesia</v-btn>
-                                    <v-btn small flat>English</v-btn>
+                                    <v-btn small flat>
+                                        <span class="caption">Bahasa Indonesia</span>
+                                    </v-btn>
+                                    <v-btn small flat>
+                                        <span class="caption">English</span>
+                                    </v-btn>
                                 </v-btn-toggle>
                             </v-flex>
                         </v-layout>
@@ -214,9 +179,14 @@
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
     import LoginForm from './authentication/login.vue';
+    import ViewContactUs from './partials/contact_us.vue';
 
     export default {
         name: 'index',
+        components: {
+            'login-form': LoginForm,
+            'view-contact-us': ViewContactUs
+        },
         data() {
             return {
                 images: [
@@ -226,9 +196,6 @@
                 ],
                 locale_toggle_button_value: 0
             };
-        },
-        components: {
-            'login-form': LoginForm
         },
         computed: {
             ...mapGetters([
@@ -245,14 +212,14 @@
         },
         watch: {
             'selected_locale'(value) {
-                return this.$store.dispatch('set_core', ['locale', value]);
+                return this.$store.dispatch('set_locale', value);
             },
             'locale'(value) {
                 return this.$i18n.locale = value;
             }
         },
         mounted() {
-            return this.$store.dispatch('set_core', ['locale', this.selected_locale]);
+            return this.$store.dispatch('set_locale', this.selected_locale);
         }
     }
 </script>

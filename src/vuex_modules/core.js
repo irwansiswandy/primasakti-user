@@ -8,8 +8,8 @@ const VuexModuleCore = {
         }
     },
     actions: {
-        set_core(context, [key, value]) {
-            return context.commit('setState', ['core', key, value]);
+        set_locale(context, value) {
+            return context.commit('setState', ['core', 'locale', value]);
         }
     }
 };
