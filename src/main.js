@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+// This initializes Vuetify.
 import Vuetify from 'vuetify';
 import '../node_modules/vuetify/dist/vuetify.min.css';
 import '../node_modules/material-design-icons-iconfont/dist/material-design-icons.css';
@@ -14,8 +15,12 @@ Vue.use(Vuetify, {
     }
 });
 
+// This initializes I18n for Vue.
 import I18n from 'vue-i18n';
 Vue.use(I18n);
+
+// This initializes font-awesome 4.7.0
+import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 Vue.config.productionTip = false
 

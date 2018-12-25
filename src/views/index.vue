@@ -135,11 +135,21 @@
                 <section>
                     <v-container fluid>
                         <v-layout row>
-                            <v-flex md12 class="text-xs-right">
+                            <v-flex md6 align-self-center class="text-xs-left">
+                                <v-btn small fab outline color="tertiary"
+                                       v-on:click="openLink('https://primasakti-print-shop.business.site/')">
+                                    <v-icon>fa-google</v-icon>
+                                </v-btn>
+                                <v-btn small fab outline color="tertiary"
+                                       v-on:click="openLink('https://primasakti-print-shop.business.site/')">
+                                    <v-icon>fa-facebook</v-icon>
+                                </v-btn>
+                            </v-flex>
+                            <v-flex md6 align-self-center class="text-xs-right">
                                 <v-btn-toggle dark mandatory class="tertiary"
                                               v-model="locale_toggle_button_value">
                                     <v-btn small flat>
-                                        <span class="caption">Bahasa Indonesia</span>
+                                        <span class="caption">Indonesia</span>
                                     </v-btn>
                                     <v-btn small flat>
                                         <span class="caption">English</span>
@@ -150,18 +160,6 @@
                     </v-container>
                 </section>
                 <!-- End: language toggle button -->
-
-                <!-- Start: footer -->
-                <v-footer class="secondary white--text">
-                    <v-layout row wrap align-center>
-                        <v-flex xs12>
-                            <div>
-                                &copy 2018 - UD. Primasakti - All Rights Reserved
-                            </div>
-                        </v-flex>
-                    </v-layout>
-                </v-footer>
-                <!-- End: footer -->
 
             </v-content>
         </v-app>
@@ -216,6 +214,12 @@
             },
             'locale'(value) {
                 return this.$i18n.locale = value;
+            }
+        },
+        methods: {
+            openLink(link) {
+                // This opens new tab that points to link.
+                return window.open(link, 'new window');
             }
         },
         mounted() {
