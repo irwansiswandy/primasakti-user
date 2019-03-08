@@ -1,9 +1,9 @@
-const APIServerURL = 'http://localhost/~irwansiswandy/primasakti-api-server/public/';
-const ServerURL = {
-    root: APIServerURL,
-    api: APIServerURL + 'api/'
-};
+window._ = require('lodash');
+
+const ServerHostname = 'http://localhost:81/';
+const BaseApiURL = ServerHostname + 'api/';
 
 export {
-    ServerURL
+    ServerHostname,
+    BaseApiURL
 };

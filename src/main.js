@@ -19,7 +19,7 @@ Vue.use(Vuetify, {
 import I18n from 'vue-i18n';
 Vue.use(I18n);
 
-// This initializes font-awesome 4.7.0
+// This initializes font-awesome
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 Vue.config.productionTip = false

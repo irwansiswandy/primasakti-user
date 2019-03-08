@@ -1,9 +1,9 @@
 <template>
     <v-container id="login-form" fluid class="pa-0">
-        <v-text-field name="email" type="email" prepend-icon="email" :placeholder="$t('email')"
+        <v-text-field name="email" type="email" prepend-icon="fa-envelope-o" :placeholder="$t('email')"
                       v-model="email">
         </v-text-field>
-        <v-text-field name="password" type="password" prepend-icon="lock_open" :placeholder="$t('password')"
+        <v-text-field name="password" type="password" prepend-icon="fa-unlock-alt" :placeholder="$t('password')"
                       v-model="password">
         </v-text-field>
         <v-layout row>
@@ -71,5 +71,3 @@
     }
 }
 </i18n>
-
-

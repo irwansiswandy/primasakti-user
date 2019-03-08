@@ -1,27 +1,7 @@
 <template>
     <div id="index">
         <v-app light>
-            <v-toolbar class="primary white--text">
-                <v-toolbar-title class="text-xs-left">
-                    <h4>PRIMASAKTI</h4>
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn flat dark>
-                        {{ $t('register') }}
-                    </v-btn>
-                    <v-menu left offset-y :close-on-content-click="false">
-                        <v-btn flat dark slot="activator">
-                            {{ $t('login') }}
-                        </v-btn>
-                        <v-card width="350">
-                            <v-card-text class="pa-4">
-                                <login-form></login-form>
-                            </v-card-text>
-                        </v-card>
-                    </v-menu>
-                </v-toolbar-items>
-            </v-toolbar>
+
             <v-content>
                 <section>
                     <v-parallax :src="images[0]" height="600">
@@ -48,13 +28,13 @@
                         <v-flex xs12>
                             <v-container grid-list-xl>
                                 <v-layout row wrap align-center>
-                                    <v-flex xs12 md4>
+                                    <v-flex xs12 md3>
                                         <v-card class="elevation-0 transparent">
                                             <v-card-text class="text-xs-center">
                                                 <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
                                             </v-card-text>
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline text-xs-center">Material Design</div>
+                                                <div class="headline text-xs-center">Money friendly</div>
                                             </v-card-title>
                                             <v-card-text>
                                                   Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -63,13 +43,28 @@
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
-                                    <v-flex xs12 md4>
+                                    <v-flex xs12 md3>
+                                        <v-card class="elevation-0 transparent">
+                                            <v-card-text class="text-xs-center">
+                                                <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
+                                            </v-card-text>
+                                            <v-card-title primary-title class="layout justify-center">
+                                                <div class="headline text-xs-center">Professional</div>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                  Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                                                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                                                  Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-flex>
+                                    <v-flex xs12 md3>
                                         <v-card class="elevation-0 transparent">
                                             <v-card-text class="text-xs-center">
                                                 <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
                                             </v-card-text>
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline">Fast development</div>
+                                                <div class="headline">High quality work</div>
                                             </v-card-title>
                                             <v-card-text>
                                                 Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -78,13 +73,13 @@
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
-                                    <v-flex xs12 md4>
+                                    <v-flex xs12 md3>
                                         <v-card class="elevation-0 transparent">
                                             <v-card-text class="text-xs-center">
                                                 <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
                                             </v-card-text>
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline text-xs-center">Completely Open Sourced</div>
+                                                <div class="headline text-xs-center">Out of the box</div>
                                             </v-card-title>
                                             <v-card-text>
                                                 Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -130,12 +125,27 @@
                         </v-layout>
                     </v-container>
                 </section>
-                
-                <!-- Start: language toggle button -->
+
+                <v-divider class="ml-5 mr-5"></v-divider>
+
+                <section>
+                    <v-container grid-list-xl>
+                        <v-layout row wrap>
+                            <v-flex md3 v-for="n in 10">
+                                <v-card>
+                                    <v-card-title>
+                                        Admin #{{ n }}
+                                    </v-card-title>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </section>
+
                 <section>
                     <v-container fluid>
                         <v-layout row>
-                            <v-flex md6 align-self-center class="text-xs-left">
+                            <v-flex md12 align-self-center class="text-xs-left">
                                 <v-btn small fab outline color="tertiary"
                                        v-on:click="openLink('https://primasakti-print-shop.business.site/')">
                                     <v-icon>fa-google</v-icon>
@@ -145,21 +155,9 @@
                                     <v-icon>fa-facebook</v-icon>
                                 </v-btn>
                             </v-flex>
-                            <v-flex md6 align-self-center class="text-xs-right">
-                                <v-btn-toggle dark mandatory class="tertiary"
-                                              v-model="locale_toggle_button_value">
-                                    <v-btn small flat>
-                                        <span class="caption">Indonesia</span>
-                                    </v-btn>
-                                    <v-btn small flat>
-                                        <span class="caption">English</span>
-                                    </v-btn>
-                                </v-btn-toggle>
-                            </v-flex>
                         </v-layout>
                     </v-container>
                 </section>
-                <!-- End: language toggle button -->
 
             </v-content>
         </v-app>
@@ -176,13 +174,11 @@
     import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
-    import LoginForm from './authentication/login.vue';
     import ViewContactUs from './partials/contact_us.vue';
 
     export default {
         name: 'index',
         components: {
-            'login-form': LoginForm,
             'view-contact-us': ViewContactUs
         },
         data() {
@@ -191,27 +187,15 @@
                     ImageHero,
                     ImageSection,
                     logoPrimasakti
-                ],
-                locale_toggle_button_value: 0
+                ]
             };
         },
         computed: {
             ...mapGetters([
                 'locale'
             ]),
-            selected_locale() {
-                if (this.locale_toggle_button_value == 0) {
-                    return 'id';
-                }
-                else if (this.locale_toggle_button_value == 1) {
-                    return 'en';
-                }
-            }
         },
         watch: {
-            'selected_locale'(value) {
-                return this.$store.dispatch('set_locale', value);
-            },
             'locale'(value) {
                 return this.$i18n.locale = value;
             }
@@ -221,9 +205,6 @@
                 // This opens new tab that points to link.
                 return window.open(link, 'new window');
             }
-        },
-        mounted() {
-            return this.$store.dispatch('set_locale', this.selected_locale);
         }
     }
 </script>
@@ -232,11 +213,15 @@
 {
     "id": {
         "login": "masuk",
-        "register": "daftar"
+        "register": "daftar",
+        "server_date": "tanggal server",
+        "server_time": "waktu server"
     },
     "en": {
         "login": "login",
-        "register": "register"
+        "register": "register",
+        "server_date": "server date",
+        "server_time": "server time"
     }
 }
 </i18n>
