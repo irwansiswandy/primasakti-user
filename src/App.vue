@@ -6,7 +6,7 @@
                 <v-layout row wrap>
                     <v-flex md6 class="text-xs-left">
                         <span class="caption">
-                            {{ $t('serverDateTime') }} : {{ displayed_date + ' / ' + server_time }}
+                            {{ displayed_date + ' / ' + server_time }}
                         </span>
                     </v-flex>
                     <v-flex md6 class="text-xs-right">
@@ -113,6 +113,9 @@
         watch: {
             'locale'(value) {
                 return this.$i18n.locale = value;
+            },
+            'server_date'(date) {
+                return this.$store.dispatch('init_shop_status');
             }
         },
         methods: {
@@ -126,10 +129,9 @@
             }
         },
         mounted() {
-            return [
-                this.$store.dispatch('set_locale', 'id'),
-                this.$store.dispatch('init_server_datetime')
-            ];
+            this.$store.dispatch('set_locale', 'id');
+            this.$store.dispatch('init_server_datetime');
+            this.$store.dispatch('init_admins');
         }
     }
 </script>
@@ -138,13 +140,11 @@
 {
     "id": {
         "login": "masuk",
-        "register": "daftar",
-        "serverDateTime": "Tanggal / Waktu Server"
+        "register": "daftar"
     },
     "en": {
         "login": "login",
-        "register": "register",
-        "serverDateTime": "Server Date / Time"
+        "register": "register"
     }
 }
 </i18n>

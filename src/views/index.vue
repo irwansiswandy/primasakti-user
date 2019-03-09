@@ -126,16 +126,25 @@
                     </v-container>
                 </section>
 
-                <v-divider class="ml-5 mr-5"></v-divider>
-
                 <section>
                     <v-container grid-list-xl>
                         <v-layout row wrap>
-                            <v-flex md3 v-for="n in 10">
-                                <v-card>
-                                    <v-card-title>
-                                        Admin #{{ n }}
-                                    </v-card-title>
+                            <v-flex md3 v-for="admin in admins">
+                                <v-card flat class="transparent">
+                                    <v-card-text>
+                                        <v-avatar size="175" color="secondary" class="mb-3"></v-avatar>
+                                        <div class="tertiary--text font-weight-bold">
+                                            {{ admin.full_name }}
+                                        </div>
+                                        <div class="caption tertiary--text">
+                                            {{ admin.age + ', ' + admin.role.name }}
+                                        </div>
+                                        <div v-if="admin.contacts.length > 0">
+                                            <span v-for="contact in admin.contacts" class="caption">
+                                                <v-icon color="secondary">fa-phone</v-icon> {{ contact.number }}
+                                            </span>
+                                        </div>
+                                    </v-card-text>
                                 </v-card>
                             </v-flex>
                         </v-layout>
@@ -192,7 +201,8 @@
         },
         computed: {
             ...mapGetters([
-                'locale'
+                'locale',
+                'admins'
             ]),
         },
         watch: {
