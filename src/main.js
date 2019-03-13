@@ -22,6 +22,9 @@ Vue.use(I18n);
 // This initializes font-awesome
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
+// This initializes flag-icon-css
+import '../node_modules/flag-icon-css/css/flag-icon.min.css';
+
 Vue.config.productionTip = false
 
 new Vue({

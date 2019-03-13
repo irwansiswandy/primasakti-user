@@ -1,6 +1,7 @@
 <template>
-    <v-container id="register" grid-list-lg>
-        <v-layout row wrap>
+    <v-container id="register"
+                 fill-height grid-list-xl align-content-center>
+        <v-layout row wrap fill-height>
             <v-flex md6 offset-md3>
                 <v-layout row wrap>
                     <v-flex md12>

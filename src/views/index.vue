@@ -1,22 +1,34 @@
 <template>
     <div id="index">
         <v-app light>
-
             <v-content>
+
                 <section>
-                    <v-parallax :src="images[0]" height="600">
+                    <v-parallax :src="images[0]" height="570">
                         <v-layout column align-center justify-center class="white--text">
                             <img src="../assets/logo_primasakti.svg" alt="Vuetify.js" height="250">
                             <!--
                             <h1 class="white--text mb-2 display-1 text-xs-center">Parallax Template</h1>
                             <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
-                            -->
                             <v-btn class="secondary mt-5" dark large href="/pre-made-themes">
                                 Get Started
                             </v-btn>
+                            -->
                         </v-layout>
                     </v-parallax>
                 </section>
+
+                <section>
+                    <v-sheet class="transparent secondary--text pt-2 pb-2">
+                        <vue-marquee-text :duration="30">
+                            <span v-for="product_category in product_categories"
+                                class="title ml-3 mr-3">
+                                {{ product_category.name }}
+                            </span>
+                        </vue-marquee-text>
+                    </v-sheet>
+                </section>
+
                 <section>
                     <v-layout column wrap class="my-5" align-center>
                         <v-flex xs12 sm4 class="my-3">
@@ -93,6 +105,7 @@
                         </v-flex>
                     </v-layout>
                 </section>
+
                 <section>
                     <v-parallax :src="images[1]" height="380">
                         <v-layout column align-center justify-center>
@@ -104,23 +117,15 @@
                         </v-layout>
                     </v-parallax>
                 </section>
+
                 <section>
                     <v-container grid-list-xl>
                         <v-layout row wrap justify-center class="my-5">
                             <v-flex xs12 sm4>
-                                <v-card class="elevation-0 transparent">
-                                    <v-card-title primary-title class="layout justify-center">
-                                        <div class="headline">Company info</div>
-                                    </v-card-title>
-                                    <v-card-text>
-                                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
-                                    </v-card-text>
-                                </v-card>
+                                <shop-info></shop-info>
                             </v-flex>
-                            <v-flex xs12 sm4 offset-sm1>
-                                <view-contact-us></view-contact-us>
+                            <v-flex xs12 sm4>
+                                <business-hours-info></business-hours-info>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -133,7 +138,7 @@
                                 <v-card flat class="transparent">
                                     <v-card-text>
                                         <v-avatar size="175" color="secondary" class="mb-3"></v-avatar>
-                                        <div class="tertiary--text font-weight-bold">
+                                        <div class="font-weight-bold">
                                             {{ admin.full_name }}
                                         </div>
                                         <div class="caption tertiary--text">
@@ -183,12 +188,20 @@
     import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
-    import ViewContactUs from './partials/contact_us.vue';
+    import InputFormTrackOrder from '../views/input_forms/track_order.vue';
+    import QueuesInfo from '../views/partials/queues_info.vue';
+    import ShopInfo from '../views/partials/shop_info.vue';
+    import BusinessHoursInfo from '../views/partials/business_hours_info.vue';
+    import VueMarqueeText from 'vue-marquee-text-component';
 
     export default {
         name: 'index',
         components: {
-            'view-contact-us': ViewContactUs
+            'input-form-track-order': InputFormTrackOrder,
+            'queues-info': QueuesInfo,
+            'shop-info': ShopInfo,
+            'business-hours-info': BusinessHoursInfo,
+            'vue-marquee-text': VueMarqueeText
         },
         data() {
             return {
@@ -202,7 +215,8 @@
         computed: {
             ...mapGetters([
                 'locale',
-                'admins'
+                'admins',
+                'product_categories'
             ]),
         },
         watch: {

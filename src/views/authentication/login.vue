@@ -1,26 +1,21 @@
 <template>
-    <v-container id="login-form" fluid class="pa-0">
-        <v-text-field name="email" type="email" prepend-icon="fa-envelope-o" :placeholder="$t('email')"
-                      v-model="email">
-        </v-text-field>
-        <v-text-field name="password" type="password" prepend-icon="fa-unlock-alt" :placeholder="$t('password')"
-                      v-model="password">
-        </v-text-field>
-        <v-layout row>
-            <v-flex d-flex>
-                <v-btn block color="secondary">
-                    {{ $t('login') }}
-                </v-btn>
-            </v-flex>
-        </v-layout>
-        <v-layout row>
-            <v-flex d-flex>
-                <v-btn block outline color="secondary">
-                    {{ $t('login_with_facebook') }}
-                </v-btn>
-            </v-flex>
-        </v-layout>
-    </v-container>
+    <v-layout id="login-form"
+              row wrap>
+        <v-flex md12>
+            <v-text-field name="email" type="email"
+                          color="secondary" prepend-icon="fa-envelope-o" :placeholder="$t('email')"
+                          v-model="email">
+            </v-text-field>
+            <v-text-field name="password" type="password"
+                          color="secondary" prepend-icon="fa-unlock-alt" :placeholder="$t('password')"
+                          v-model="password">
+            </v-text-field>
+            <v-btn block color="secondary" :loading="submitting"
+                   v-on:click="submit">
+                {{ $t('login') }}
+            </v-btn>
+        </v-flex>
+    </v-layout>
 </template>
 
 <style>
@@ -36,7 +31,8 @@
             return {
                 guard: 'web',
                 email: '',
-                password: ''
+                password: '',
+                submitting: false
             };
         },
         computed: {
@@ -47,6 +43,11 @@
         watch: {
             'locale'(value) {
                 return this.$i18n.locale = value;
+            }
+        },
+        methods: {
+            submit() {
+                this.$set(this, 'submitting', true);
             }
         },
         mounted() {

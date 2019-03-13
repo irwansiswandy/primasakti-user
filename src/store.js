@@ -6,7 +6,9 @@ import Locale from './vuex_modules/locale.js';
 import ServerDateTime from './vuex_modules/server_datetime.js';
 import Admins from './vuex_modules/admins.js';
 import ServerResponse from './vuex_modules/server_response.js';
-import ShopStatus from './vuex_modules/shop_status.js';
+import Queues from './vuex_modules/queues';
+import BusinessHours from './vuex_modules/business_hours.js';
+import ProductCategories from './vuex_modules/product_categories.js';
 
 export default new Vuex.Store({
     modules: {
@@ -14,7 +16,9 @@ export default new Vuex.Store({
         'server_datetime': ServerDateTime,
         'admins': Admins,
         'server_response': ServerResponse,
-        'shop_status': ShopStatus
+        'queues': Queues,
+        'business_hours': BusinessHours,
+        'product_categories': ProductCategories
     },
     mutations: {
         setState(state, [module_name, key, value]) {
