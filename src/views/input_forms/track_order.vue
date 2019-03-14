@@ -1,13 +1,12 @@
 <template>
-    <div id="input-form-track-order">
-        <v-text-field :color="color"
-                      :prepend-icon="icon"
-                      :label="$t('label')"
-                      :hint="$t('hint')"
-                      clearable
-                      v-model="order_no">
-        </v-text-field>
-    </div>
+    <v-text-field id="input-form-track-order"
+                  :color="color"
+                  :prepend-icon="icon"
+                  :label="$t('label')"
+                  :hint="$t('hint')"
+                  clearable
+                  v-model="order_no">
+    </v-text-field>
 </template>
 
 <style>
@@ -16,6 +15,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import MyAxios from '../../plugins/axios.js';
 
     export default {
         name: 'input-form-track-order',
@@ -31,7 +31,7 @@
                 type: String,
                 required: false,
                 default: () => {
-                    return 'fa-search';
+                    return 'fa-barcode';
                 }
             }
         },
@@ -49,6 +49,25 @@
             'locale'(value) {
                 return this.$i18n.locale = value;
             }
+        },
+        methods: {
+            submit() {
+                return MyAxios.get('/orders', {
+                    params: {
+                        order_no: this.order_no,
+                        includes: 'user'
+                    }
+                }).then((response) => {
+                    return this.$emit('submit-success', response);
+                }).catch((error) => {
+                    return this.$emit('submit-error', error.response);
+                });
+            }
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.$i18n.locale = this.locale;
+            });
         }
     }
 </script>
@@ -56,11 +75,11 @@
 <i18n>
 {
     "id": {
-        "label": "Lacak order saya",
+        "label": "Nomor order",
         "hint": "Ketikkan nomor order anda"
     },
     "en": {
-        "label": "Track my order",
+        "label": "Order number",
         "hint": "Input your order number"
     }
 }

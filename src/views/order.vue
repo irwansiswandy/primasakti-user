@@ -1,0 +1,103 @@
+<template>
+    <v-card id="view-order"
+            :flat="borderless"
+            :tile="!borderless">
+        <v-list dense>
+            <v-list-tile>
+                <v-list-tile-content class="font-weight-black">
+                    {{ $t('order_no') }}
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end font-weight-black">
+                    {{ order.order_no }}
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+                <v-list-tile-content>
+                    {{ $t('datetime_added') }}
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end">
+                    {{ order.created_at }}
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+                <v-list-tile-content>
+                    {{ formatUserType(order.user_type) }}
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end">
+                    {{ order.user.first_name + ' ' + order.user.last_name }}
+                    <div class="caption">
+                        {{ order.user.email }}
+                    </div>
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+                <v-list-tile-content class="font-weight-black">
+                    Status
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end font-weight-black">
+                    {{ order.status }}
+                </v-list-tile-content>
+            </v-list-tile>
+        </v-list>
+    </v-card>
+</template>
+
+<style>
+    /* */
+</style>
+
+<script>
+    import { mapGetters } from 'vuex';
+
+    export default {
+        name: 'view-order',
+        props: {
+            order: {
+                type: Object,
+                required: true
+            },
+            borderless: {
+                type: Boolean,
+                required: false,
+                default: () => {
+                    return false;
+                }
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'locale'
+            ])
+        },
+        watch: {
+            'locale'(value) {
+                return this.$i18n.locale = value;
+            }
+        },
+        methods: {
+            formatUserType(value) {
+                return _.split(value, '\\')[1];
+            }
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.$i18n.locale = this.locale;
+            });
+        }
+    }
+</script>
+
+<i18n>
+{
+    "id": {
+        "order_no": "No. Order",
+        "datetime_added": "Tgl / Waktu Masuk"
+    },
+    "en": {
+        "order_no": "Order No.",
+        "datetime_added": "Date / Time Added"
+    }
+}
+</i18n>
+
+

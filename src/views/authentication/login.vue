@@ -10,10 +10,6 @@
                           color="secondary" prepend-icon="fa-unlock-alt" :placeholder="$t('password')"
                           v-model="password">
             </v-text-field>
-            <v-btn block color="secondary" :loading="submitting"
-                   v-on:click="submit">
-                {{ $t('login') }}
-            </v-btn>
         </v-flex>
     </v-layout>
 </template>
@@ -31,8 +27,7 @@
             return {
                 guard: 'web',
                 email: '',
-                password: '',
-                submitting: false
+                password: ''
             };
         },
         computed: {

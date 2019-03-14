@@ -42,23 +42,51 @@
                     </h4>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" dark icon
+                           v-on:click="showMyDialog('track-order')">
+                        <v-icon>fa-search</v-icon>
+                    </v-btn>
+                    <span>{{ $t('track_order') }}</span>
+                </v-tooltip>
                 <v-toolbar-items v-if="!user_is_authenticated">
-                    <v-menu offset-y :close-on-content-click="false">
+                    <v-menu offset-y>
                         <v-btn slot="activator" dark icon>
                             <v-icon>fa-user</v-icon>
                         </v-btn>
-                        <v-card flat width="300">
-                            <v-card-text>
-                                <login-form></login-form>
-                                <v-btn block outline color="secondary"
-                                       v-on:click="$router.replace('/register')">
+                        <v-list>
+                            <v-list-tile v-on:click="showMyDialog('login')">
+                                <v-list-tile-title>
+                                    {{ $t('login') }}
+                                </v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile v-on:click="showMyDialog('register')">
+                                <v-list-tile-title>
                                     {{ $t('register') }}
-                                </v-btn>
-                            </v-card-text>
-                        </v-card>
+                                </v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
                     </v-menu>
                 </v-toolbar-items>
             </v-toolbar>
+
+            <my-dialog v-on:action="handleMyDialogAction">
+                <v-container fluid v-if="dialog.content == 'track-order'">
+                    <track-order ref="trackOrder"
+                                 v-on:submit-success="handleTrackOrderSubmitSuccess"
+                                 v-on:submit-error="handleTrackOrderSubmitError">
+                    </track-order>
+                    <view-order v-if="Object.keys(dialog.payload).length > 0 && dialog.content == 'track-order'"
+                                :order="dialog.payload">
+                    </view-order>
+                </v-container>
+                <v-container fluid v-else-if="dialog.content == 'login'">
+                    <login-form></login-form>
+                </v-container>
+                <v-container fluid v-else-if="dialog.content == 'register'">
+                    <register-form></register-form>
+                </v-container>
+            </my-dialog>
 
             <router-view></router-view>
 
@@ -96,12 +124,20 @@
 <script>
     import moment from 'moment';
     import { mapGetters } from 'vuex';
+    import TrackOrder from './views/input_forms/track_order.vue';
     import LoginForm from './views/authentication/login.vue';
+    import RegisterForm from './views/authentication/register.vue';
+    import MyDialog from './components/dialog.vue';
+    import ViewOrder from './views/order.vue';
 
     export default {
         name: 'app',
         components: {
-            'login-form': LoginForm
+            'track-order': TrackOrder,
+            'login-form': LoginForm,
+            'register-form': RegisterForm,
+            'my-dialog': MyDialog,
+            'view-order': ViewOrder
         },
         data() {
             return {
@@ -113,7 +149,8 @@
                 'locale',
                 'server_date',
                 'server_time',
-                'business_hours'
+                'business_hours',
+                'dialog'
             ]),
             footer_year() {
                 return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).year();
@@ -148,15 +185,104 @@
                 else {
                     return ' ';
                 }
+            },
+            showMyDialog(content) {
+                this.$store.dispatch('set_dialog', ['content', content]);
+                let title = '';
+                let actions = [];
+                // This handles dialog for 'track-order'
+                if (content == 'track-order') {
+                    if (this.locale == 'id') {
+                        title = 'Lacak Order';
+                        actions.push(
+                            { name: 'cancel', text: 'batal' },
+                            { name: 'track_order', text: 'lacak' }
+                        );
+                    }
+                    else if (this.locale == 'en') {
+                        title = 'Track Order';
+                        actions.push(
+                            { name: 'cancel', text: 'cancel' },
+                            { name: 'track_order', text: 'track' }
+                        );
+                    }
+                }
+                // This handles dialog for 'login'
+                else if (content == 'login') {
+                    if (this.locale == 'id') {
+                        title = 'Akun Saya';
+                        actions.push(
+                            { name: 'cancel', text: 'batal' },
+                            { name: 'login', text: 'masuk' }
+                        );
+                    }
+                    else if (this.locale == 'en') { 
+                        title = 'My Account';
+                        actions.push(
+                            { name: 'cancel', text: 'cancel' },
+                            { name: 'login', text: 'login' }
+                        );
+                    }
+                }
+                // This handles dialog for 'register'
+                else if (content == 'register') {
+                    if (this.locale == 'id') {
+                        title = 'Daftar';
+                        actions.push(
+                            { name: 'cancel', text: 'batal' },
+                            { name: 'register', text: 'daftar' }
+                        );
+                    }
+                    else if (this.locale == 'en') {
+                        title = 'Register';
+                        actions.push(
+                            { name: 'cancel', text: 'cancel' },
+                            { name: 'register', text: 'register' }
+                        );
+                    }
+                }
+                this.$store.dispatch('set_dialog', ['title', title]);
+                this.$store.dispatch('set_dialog', ['actions', actions]);
+                return this.$store.dispatch('set_dialog', ['show', true]);
+            },
+            handleMyDialogAction(name) {
+                if (name == 'cancel') {
+                    this.$store.dispatch('set_dialog', ['show', false]);
+                    return setTimeout(() => {
+                        this.$store.dispatch('reset_dialog');
+                    }, 250);
+                }
+                else if (name == 'track_order') {
+                    this.$store.dispatch('set_dialog', ['loading', true]);
+                    return this.$refs.trackOrder.submit();
+                }
+                else if (name == 'login') {
+                    this.$store.dispatch('set_dialog', ['loading', true]);
+                }
+                else if (name == 'register') {
+                    this.$store.dispatch('set_dialog', ['loading', true]);
+                }
+            },
+            handleTrackOrderSubmitSuccess(response) {
+                this.$store.dispatch('set_dialog', ['loading', false]);
+                if (response.data.length > 0) {
+                    this.$store.dispatch('set_dialog', ['payload', response.data[0]]);
+                }
+            },
+            handleTrackOrderSubmitError(response) {
+                this.$store.dispatch('set_dialog', ['loading', false]);
+                console.log(response);
             }
         },
         mounted() {
-            this.$store.dispatch('set_locale', 'id');
-            this.$store.dispatch('init_server_datetime');
-            this.$store.dispatch('init_admins');
-            this.$store.dispatch('init_queues');
-            this.$store.dispatch('init_business_hours');
-            this.$store.dispatch('init_product_categories');
+            return [
+                this.$store.dispatch('set_locale', 'id'),
+                this.$store.dispatch('init_server_datetime'),
+                this.$store.dispatch('init_admins'),
+                this.$store.dispatch('init_queues'),
+                this.$store.dispatch('init_business_hours'),
+                this.$store.dispatch('init_product_categories')
+            ];
         }
     }
 </script>
@@ -167,13 +293,19 @@
         "login": "masuk",
         "register": "daftar",
         "open": "BUKA",
-        "closed": "TUTUP"
+        "closed": "TUTUP",
+        "track_order": "Lacak order",
+        "login": "Masuk",
+        "register": "Daftar"
     },
     "en": {
         "login": "login",
         "register": "register",
         "open": "OPEN",
-        "closed": "CLOSED"
+        "closed": "CLOSED",
+        "track_order": "Track order",
+        "login": "Login",
+        "register": "Register"
     }
 }
 </i18n>

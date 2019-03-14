@@ -51,7 +51,7 @@
             },
             getTextClass(day_number) {
                 if (day_number == this.current_day_number) {
-                    return ' font-weight-black secondary--text';
+                    return ' font-weight-black';
                 }
                 else {
                     return '';

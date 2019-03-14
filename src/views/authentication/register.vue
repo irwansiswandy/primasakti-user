@@ -1,46 +1,27 @@
 <template>
-    <v-container id="register"
-                 fill-height grid-list-xl align-content-center>
-        <v-layout row wrap fill-height>
-            <v-flex md6 offset-md3>
-                <v-layout row wrap>
-                    <v-flex md12>
-                        <h3>{{ $t('message') }}</h3>
-                    </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                    <v-flex md12>
-                        <v-text-field type="text" color="secondary" :label="$t('first_name')"
-                                      v-model="first_name">
-                        </v-text-field>
-                        <v-text-field type="text" color="secondary" :label="$t('last_name')"
-                                      v-model="last_name">
-                        </v-text-field>
-                        <select-date type="date" :label="$t('birthday')"
-                                     v-model="birthday">
-                        </select-date>
-                        <v-text-field type="text" color="secondary" :label="$t('email_address')"
-                                      v-model="email">
-                        </v-text-field>
-                        <v-text-field type="text" color="secondary" :label="$t('password')"
-                                      v-model="password">
-                        </v-text-field>
-                        <v-text-field type="text" color="secondary" :placeholder="$t('password_confirmation')"
-                                      v-model="password_confirmation">
-                        </v-text-field>
-                    </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                    <v-flex md12>
-                        <v-btn block color="secondary white--text" :loading="submitting"
-                               v-on:click="submit()">
-                            {{ $t('submit_button_title') }}
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-            </v-flex>
-        </v-layout>
-    </v-container>
+    <v-layout id="register"
+              row wrap>
+        <v-flex md12>
+            <v-text-field type="text" color="secondary" :label="$t('first_name')"
+                          v-model="first_name">
+            </v-text-field>
+            <v-text-field type="text" color="secondary" :label="$t('last_name')"
+                          v-model="last_name">
+            </v-text-field>
+            <select-date type="date" :label="$t('birthday')"
+                         v-model="birthday">
+            </select-date>
+            <v-text-field type="text" color="secondary" :label="$t('email_address')"
+                          v-model="email">
+            </v-text-field>
+            <v-text-field type="text" color="secondary" :label="$t('password')"
+                          v-model="password">
+            </v-text-field>
+            <v-text-field type="text" color="secondary" :placeholder="$t('password_confirmation')"
+                          v-model="password_confirmation">
+            </v-text-field>
+        </v-flex>
+    </v-layout>
 </template>
 
 <style>
@@ -63,8 +44,7 @@
                 birthday: '',
                 email: '',
                 password: '',
-                password_confirmation: '',
-                submitting: false
+                password_confirmation: ''
             };
         },
         computed: {
