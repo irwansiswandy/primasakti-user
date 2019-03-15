@@ -9,8 +9,8 @@
             <br>Surabaya 60292
             <br>Jawa Timur, Indonesia
             <br>
-            <br><v-icon color="secondary" class="mr-2">fa-phone</v-icon> +62 31 8484808
-            <br><v-icon color="secondary" class="mr-2">fa-envelope-o</v-icon> primasakti_copycenter@yahoo.com
+            <br><v-icon color="secondary" class="mr-1">fa-phone</v-icon> +62 31 8484808
+            <br><v-icon color="secondary" class="mr-1">fa-envelope-o</v-icon> primasakti_copycenter@yahoo.com
         </v-card-text>
     </v-card>
 </template>

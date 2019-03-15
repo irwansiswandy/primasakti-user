@@ -210,7 +210,6 @@
     import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
-    import InputFormTrackOrder from '../views/input_forms/track_order.vue';
     import QueuesInfo from '../views/partials/queues_info.vue';
     import ShopInfo from '../views/partials/shop_info.vue';
     import BusinessHoursInfo from '../views/partials/business_hours_info.vue';
@@ -219,7 +218,6 @@
     export default {
         name: 'index',
         components: {
-            'input-form-track-order': InputFormTrackOrder,
             'queues-info': QueuesInfo,
             'shop-info': ShopInfo,
             'business-hours-info': BusinessHoursInfo,

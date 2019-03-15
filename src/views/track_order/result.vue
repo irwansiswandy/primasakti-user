@@ -39,6 +39,12 @@
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <span class="caption secondary--text">
+                Lihat Nota
+            </span>
+        </v-card-actions>
     </v-card>
 </template>
 

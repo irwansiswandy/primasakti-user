@@ -73,12 +73,10 @@
             <my-dialog v-on:action="handleMyDialogAction">
                 <v-container fluid v-if="dialog.content == 'track-order'">
                     <track-order ref="trackOrder"
+                                 v-on:clear="handleTrackOrderClear"
                                  v-on:submit-success="handleTrackOrderSubmitSuccess"
                                  v-on:submit-error="handleTrackOrderSubmitError">
                     </track-order>
-                    <view-order v-if="Object.keys(dialog.payload).length > 0 && dialog.content == 'track-order'"
-                                :order="dialog.payload">
-                    </view-order>
                 </v-container>
                 <v-container fluid v-else-if="dialog.content == 'login'">
                     <login-form></login-form>
@@ -124,11 +122,10 @@
 <script>
     import moment from 'moment';
     import { mapGetters } from 'vuex';
-    import TrackOrder from './views/input_forms/track_order.vue';
+    import TrackOrder from './views/track_order/input_form.vue';
     import LoginForm from './views/authentication/login.vue';
     import RegisterForm from './views/authentication/register.vue';
     import MyDialog from './components/dialog.vue';
-    import ViewOrder from './views/order.vue';
 
     export default {
         name: 'app',
@@ -136,8 +133,7 @@
             'track-order': TrackOrder,
             'login-form': LoginForm,
             'register-form': RegisterForm,
-            'my-dialog': MyDialog,
-            'view-order': ViewOrder
+            'my-dialog': MyDialog
         },
         data() {
             return {
@@ -195,14 +191,14 @@
                     if (this.locale == 'id') {
                         title = 'Lacak Order';
                         actions.push(
-                            { name: 'cancel', text: 'batal' },
+                            { name: 'close', text: 'tutup' },
                             { name: 'track_order', text: 'lacak' }
                         );
                     }
                     else if (this.locale == 'en') {
                         title = 'Track Order';
                         actions.push(
-                            { name: 'cancel', text: 'cancel' },
+                            { name: 'close', text: 'close' },
                             { name: 'track_order', text: 'track' }
                         );
                     }
@@ -212,14 +208,14 @@
                     if (this.locale == 'id') {
                         title = 'Akun Saya';
                         actions.push(
-                            { name: 'cancel', text: 'batal' },
+                            { name: 'close', text: 'tutup' },
                             { name: 'login', text: 'masuk' }
                         );
                     }
                     else if (this.locale == 'en') { 
                         title = 'My Account';
                         actions.push(
-                            { name: 'cancel', text: 'cancel' },
+                            { name: 'close', text: 'close' },
                             { name: 'login', text: 'login' }
                         );
                     }
@@ -229,14 +225,14 @@
                     if (this.locale == 'id') {
                         title = 'Daftar';
                         actions.push(
-                            { name: 'cancel', text: 'batal' },
+                            { name: 'close', text: 'tutup' },
                             { name: 'register', text: 'daftar' }
                         );
                     }
                     else if (this.locale == 'en') {
                         title = 'Register';
                         actions.push(
-                            { name: 'cancel', text: 'cancel' },
+                            { name: 'close', text: 'close' },
                             { name: 'register', text: 'register' }
                         );
                     }
@@ -246,10 +242,11 @@
                 return this.$store.dispatch('set_dialog', ['show', true]);
             },
             handleMyDialogAction(name) {
-                if (name == 'cancel') {
+                if (name == 'close') {
                     this.$store.dispatch('set_dialog', ['show', false]);
                     return setTimeout(() => {
                         this.$store.dispatch('reset_dialog');
+                        this.$store.dispatch('reset_server_response');
                     }, 250);
                 }
                 else if (name == 'track_order') {
@@ -263,15 +260,16 @@
                     this.$store.dispatch('set_dialog', ['loading', true]);
                 }
             },
+            handleTrackOrderClear() {
+                this.$store.dispatch('reset_server_response');
+            },
             handleTrackOrderSubmitSuccess(response) {
                 this.$store.dispatch('set_dialog', ['loading', false]);
-                if (response.data.length > 0) {
-                    this.$store.dispatch('set_dialog', ['payload', response.data[0]]);
-                }
+                return this.$store.dispatch('set_server_response', response);
             },
             handleTrackOrderSubmitError(response) {
                 this.$store.dispatch('set_dialog', ['loading', false]);
-                console.log(response);
+                return this.$store.dispatch('set_server_response', response);
             }
         },
         mounted() {
