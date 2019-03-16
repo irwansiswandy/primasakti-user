@@ -30,7 +30,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import SelectDate from '../../../../primasakti-admin/src/components/templates/ui/selects/date.vue';
+    import SelectDate from '../../../../primasakti-admin/src/components/selects/date.vue';
 
     export default {
         name: 'register',
