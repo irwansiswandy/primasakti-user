@@ -12,7 +12,7 @@
                 <v-card-text>
                     <slot name="default"></slot>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions v-if="dialog.actions.length > 0">
                     <v-spacer></v-spacer>
                     <template v-for="action in dialog.actions">
                         <v-btn flat color="secondary" :loading="action.loading"

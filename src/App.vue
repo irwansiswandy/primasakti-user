@@ -77,6 +77,9 @@
                                  v-on:submit-success="handleTrackOrderSubmitSuccess"
                                  v-on:submit-error="handleTrackOrderSubmitError">
                     </track-order>
+                    <track-order-result v-if="dialog.content == 'track-order' && server_response.status == 200 && Object.keys(server_response.data).length > 0"
+                                        :order="server_response.data">
+                    </track-order-result>
                 </v-container>
                 <v-container fluid v-else-if="dialog.content == 'login'">
                     <login-form></login-form>
@@ -126,6 +129,7 @@
     import LoginForm from './views/authentication/login.vue';
     import RegisterForm from './views/authentication/register.vue';
     import MyDialog from './components/dialog.vue';
+    import TrackOrderResult from './views/track_order/result.vue';
 
     export default {
         name: 'app',
@@ -133,7 +137,8 @@
             'track-order': TrackOrder,
             'login-form': LoginForm,
             'register-form': RegisterForm,
-            'my-dialog': MyDialog
+            'my-dialog': MyDialog,
+            'track-order-result': TrackOrderResult
         },
         data() {
             return {
@@ -146,7 +151,8 @@
                 'server_date',
                 'server_time',
                 'business_hours',
-                'dialog'
+                'dialog',
+                'server_response'
             ]),
             footer_year() {
                 return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).year();
