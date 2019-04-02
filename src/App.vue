@@ -42,13 +42,10 @@
                     </h4>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" dark icon
-                           v-on:click="showMyDialog('track-order')">
-                        <v-icon>fa-search</v-icon>
-                    </v-btn>
-                    <span>{{ $t('track_order') }}</span>
-                </v-tooltip>
+                <v-btn small color="secondary white--text"
+                       v-on:click="showMyDialog('track-order')">
+                    <span class="caption">{{ $t('track_order') }}</span>
+                </v-btn>
                 <v-toolbar-items v-if="!user_is_authenticated">
                     <v-menu offset-y>
                         <v-btn slot="activator" dark icon>
@@ -71,22 +68,24 @@
             </v-toolbar>
 
             <my-dialog v-on:action="handleMyDialogAction">
-                <v-container fluid v-if="dialog.content == 'track-order'">
-                    <track-order ref="trackOrder"
-                                 v-on:clear="handleTrackOrderClear"
-                                 v-on:submit-success="handleTrackOrderSubmitSuccess"
-                                 v-on:submit-error="handleTrackOrderSubmitError">
-                    </track-order>
-                    <track-order-result v-if="dialog.content == 'track-order' && server_response.status == 200 && Object.keys(server_response.data).length > 0"
-                                        :order="server_response.data">
-                    </track-order-result>
-                </v-container>
-                <v-container fluid v-else-if="dialog.content == 'login'">
-                    <login-form></login-form>
-                </v-container>
-                <v-container fluid v-else-if="dialog.content == 'register'">
-                    <register-form></register-form>
-                </v-container>
+                <div v-if="dialog.content">
+                    <span v-if="dialog.content == 'track-order'">
+                        <track-order ref="trackOrder"
+                                     v-on:clear="handleTrackOrderClear"
+                                     v-on:submit-success="handleTrackOrderSubmitSuccess"
+                                     v-on:submit-error="handleTrackOrderSubmitError">
+                        </track-order>
+                        <track-order-result v-if="dialog.content == 'track-order' && server_response.status == 200 && Object.keys(server_response.data).length > 0"
+                                            :order="server_response.data">
+                        </track-order-result>
+                    </span>
+                    <span v-else-if="dialog.content == 'login'">
+                        <login-form></login-form>
+                    </span>
+                    <span v-else-if="dialog.content == 'register'">
+                        <register-form></register-form>
+                    </span>
+                </div>
             </my-dialog>
 
             <router-view></router-view>

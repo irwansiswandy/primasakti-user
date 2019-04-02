@@ -14,8 +14,10 @@
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
-        <v-card-text class="caption red--text">
-            * {{ $t('message') }}
+        <v-card-text>
+            <v-sheet tile color="warning white--text" class="pa-1">
+                * {{ $t('message') }}
+            </v-sheet>
         </v-card-text>
     </v-card>
 </template>
