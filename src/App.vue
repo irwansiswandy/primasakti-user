@@ -163,10 +163,16 @@
                 return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).day();
             },
             current_business_hour() {
-                let _current_business_hour = this.business_hours.filter((business_hour) => {
-                    return business_hour.day === this.current_day_number;
-                });
-                return _current_business_hour[0];
+                let business_hour = {};
+                for (let i=0; i<this.business_hours.data.length; i++) {
+                    if (this.business_hours.data[i].day == this.current_day_number) {
+                        business_hour = this.business_hours.data[i];
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                return business_hour;
             },
             shop_is_open() {
                 let current_datetime = this.server_date + ' ' + this.server_time;
@@ -278,14 +284,12 @@
             }
         },
         mounted() {
-            return [
-                this.$store.dispatch('set_locale', 'id'),
-                this.$store.dispatch('init_server_datetime'),
-                this.$store.dispatch('init_admins'),
-                this.$store.dispatch('init_queues'),
-                this.$store.dispatch('init_business_hours'),
-                this.$store.dispatch('init_product_categories')
-            ];
+            this.$store.dispatch('set_locale', 'id');
+            this.$store.dispatch('init_server_datetime');
+            this.$store.dispatch('init_admins');
+            this.$store.dispatch('init_queues');
+            this.$store.dispatch('init_business_hours');
+            this.$store.dispatch('init_product_categories');
         }
     }
 </script>

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-retry": "^3.1.2",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",

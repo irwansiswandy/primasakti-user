@@ -25,6 +25,10 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 // This initializes flag-icon-css
 import '../node_modules/flag-icon-css/css/flag-icon.min.css';
 
+// This initializes vue's plugin for Axios.
+import AxiosVuePlugin from './plugins/vue/axios.js';
+Vue.use(AxiosVuePlugin);
+
 Vue.config.productionTip = false
 
 new Vue({

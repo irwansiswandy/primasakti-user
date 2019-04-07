@@ -1,8 +1,8 @@
-import MyAxios from '../plugins/axios.js';
+import ResourcesPlugin from '../plugins/resources.js';
+import MyAxios from '../plugins/axios.js'; 
 
 const VuexModuleQueues = {
     state: {
-        api_url: '/customer_queues',
         loading: true,
         queues: []
     },
@@ -12,19 +12,23 @@ const VuexModuleQueues = {
         }
     },
     mutations: {
-
+        //
     },
     actions: {
         init_queues(context) {
-            return MyAxios.get(context.state.api_url, {
-                params: {
-                    // finished: false
-                }
+            let api = {
+                url: ResourcesPlugin.queues.api.url,
+                params: ResourcesPlugin.queues.api.params
+            };
+            api.params.finished = false;
+        
+            return MyAxios.get(api.url, {
+                params: api.params
             }).then((response) => {
                 context.commit('setState', ['queues', 'queues', response.data]);
                 return context.commit('setState', ['queues', 'loading', false]);
             }).catch((error) => {
-                //
+                return context.dispatch('set_server_response', error.response);
             });
         }
     }

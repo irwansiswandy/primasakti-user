@@ -1,30 +1,23 @@
-import MyAxios from '../plugins/axios.js';
-import moment from 'moment';
+import ResourcesPlugin from '../plugins/resources.js';
 
 const VuexModuleBusinessHours = {
     state: {
-        api_url: '/business_hours',
         loading: true,
-        business_hours: []
+        data: []
     },
     getters: {
         business_hours(state) {
-            return state.business_hours;
+            return state;
         }
-    },
-    mutations: {
-
     },
     actions: {
         init_business_hours(context) {
-            return MyAxios.get(context.state.api_url)
-                          .then((response) => {
-                              context.commit('setState', ['business_hours', 'business_hours', response.data]);
-                              return context.commit('setState', ['business_hours', 'loading', false]);
-                          })
-                          .catch((error) => {
-                              //
-                          });
+            return ResourcesPlugin.business_hours.get().then((response) => {
+                context.commit('setState', ['business_hours', 'data', response.data]);
+                return context.commit('setState', ['business_hours', 'loading', false]);
+            }).catch((error) => {
+                //
+            });
         }
     }
 };

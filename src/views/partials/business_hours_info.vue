@@ -1,11 +1,12 @@
 <template>
     <v-card id="business-hours-info"
-            flat class="transparent">
+            flat class="transparent"
+            v-if="!business_hours.loading">
         <v-card-title class="headline justify-center">
             {{ $t('title') }}
         </v-card-title>
         <v-list dense class="transparent">
-            <v-list-tile v-for="business_hour in business_hours">
+            <v-list-tile v-for="(business_hour, index) in business_hours.data" :key="index">
                 <v-list-tile-content :class="getTextClass(business_hour.day)">
                     {{ getDayText(business_hour.day) }}
                 </v-list-tile-content>
