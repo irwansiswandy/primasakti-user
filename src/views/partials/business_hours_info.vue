@@ -6,20 +6,21 @@
             {{ $t('title') }}
         </v-card-title>
         <v-list dense class="transparent">
-            <v-list-tile v-for="(business_hour, index) in business_hours.data" :key="index">
-                <v-list-tile-content :class="getTextClass(business_hour.day)">
+            <v-list-tile v-for="(business_hour, index) in business_hours.data" :key="index"
+                         :class="getActiveBusinessHourClass(business_hour.day)">
+                <v-list-tile-content>
                     {{ getDayText(business_hour.day) }}
                 </v-list-tile-content>
-                <v-list-tile-content :class="'align-end' + getTextClass(business_hour.day)">
+                <v-list-tile-content class="align-end">
                     {{ formatTime(business_hour.open) + ' - ' + formatTime(business_hour.close) }}
                 </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile class="warning white--text mt-2">
+                <v-list-tile-content class="align-center">
+                    * {{ $t('message') }}
+                </v-list-tile-content>
+            </v-list-tile>
         </v-list>
-        <v-card-text>
-            <v-sheet tile color="warning white--text" class="pa-1">
-                * {{ $t('message') }}
-            </v-sheet>
-        </v-card-text>
     </v-card>
 </template>
 
@@ -52,9 +53,9 @@
             getDayText(day_number) {
                 return moment().locale(this.locale).weekday(day_number - 1).format('dddd');
             },
-            getTextClass(day_number) {
+            getActiveBusinessHourClass(day_number) {
                 if (day_number == this.current_day_number) {
-                    return ' font-weight-black';
+                    return 'secondary white--text';
                 }
                 else {
                     return '';
