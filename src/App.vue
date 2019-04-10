@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app v-resize="handleViewportResize">
         <v-content>
 
             <v-sheet tile color="primary lighten-1 white--text" class="pt-1 pb-1 pl-3 pr-3">
@@ -46,6 +46,7 @@
                        v-on:click="showMyDialog('track-order')">
                     <span class="caption">{{ $t('track_order') }}</span>
                 </v-btn>
+                <!--
                 <v-toolbar-items v-if="!user_is_authenticated">
                     <v-menu offset-y>
                         <v-btn slot="activator" dark icon>
@@ -65,9 +66,11 @@
                         </v-list>
                     </v-menu>
                 </v-toolbar-items>
+                -->
             </v-toolbar>
 
-            <my-dialog v-on:action="handleMyDialogAction">
+            <my-dialog :fullscreen="mobile_view"
+                       v-on:action="handleMyDialogAction">
                 <div v-if="dialog.content">
                     <span v-if="dialog.content == 'track-order'">
                         <track-order ref="trackOrder"
@@ -141,6 +144,10 @@
         },
         data() {
             return {
+                viewport: {
+                    width: 0,
+                    height: 0
+                },
                 user_is_authenticated: false
             };
         },
@@ -177,6 +184,14 @@
             shop_is_open() {
                 let current_datetime = this.server_date + ' ' + this.server_time;
                 return moment(current_datetime, 'YYYY-MM-DD HH:mm:ss').isBetween(this.server_date + ' ' + this.current_business_hour.open, this.server_date + ' ' + this.current_business_hour.close);
+            },
+            mobile_view() {
+                if (this.viewport.width < 600) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         },
         watch: {
@@ -281,6 +296,12 @@
             handleTrackOrderSubmitError(response) {
                 this.$store.dispatch('set_dialog', ['loading', false]);
                 return this.$store.dispatch('set_server_response', response);
+            },
+            handleViewportResize() {
+                return [
+                    this.$set(this.viewport, 'width', window.innerWidth),
+                    this.$set(this.viewport, 'height', window.innerHeight)
+                ];
             }
         },
         mounted() {

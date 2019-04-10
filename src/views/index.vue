@@ -31,6 +31,7 @@
                     </v-sheet>
                 </section>
 
+                <!--
                 <section>
                     <v-layout column wrap class="my-5" align-center>
                         <v-flex xs12 sm4 class="my-3">
@@ -119,6 +120,7 @@
                         </v-layout>
                     </v-parallax>
                 </section>
+                -->
 
                 <section>
                     <v-container grid-list-xl>
