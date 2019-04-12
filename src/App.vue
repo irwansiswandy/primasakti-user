@@ -4,7 +4,7 @@
 
             <v-sheet tile color="primary lighten-1 white--text" class="pt-1 pb-1 pl-3 pr-3">
                 <v-layout row wrap>
-                    <v-flex md6 class="text-xs-left">
+                    <v-flex sm6 class="text-xs-left">
                         <span class="caption">
                             {{ displayed_date + ' / ' + server_time }}
                         </span>
@@ -17,7 +17,7 @@
                             {{ $t('closed') }}
                         </span>
                     </v-flex>
-                    <v-flex md6 class="text-xs-right">
+                    <v-flex sm6 class="text-xs-right">
                         <span class="ml-2">
                             <span class="flag-icon flag-icon-id"
                                   style="cursor: pointer"
