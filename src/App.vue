@@ -252,7 +252,7 @@
                             { name: 'login', text: 'masuk' }
                         );
                     }
-                    else if (this.locale == 'en') { 
+                    else if (this.locale == 'en') {
                         title = 'My Account';
                         actions.push(
                             { name: 'close', text: 'close' },

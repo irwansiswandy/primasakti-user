@@ -4,14 +4,32 @@
         <v-card-title class="headline justify-center">
             {{ $t('title') }}
         </v-card-title>
-        <v-card-text>
-            Jl. Raya Tenggilis No. 34-34A
-            <br>Surabaya 60292
-            <br>Jawa Timur, Indonesia
-            <br>
-            <br><v-icon color="secondary" class="mr-1">fa-phone</v-icon> +62 31 8484808
-            <br><v-icon color="secondary" class="mr-1">fa-envelope-o</v-icon> primasakti_copycenter@yahoo.com
-        </v-card-text>
+        <v-list dense class="transparent">
+            <v-list-tile>
+                <v-list-tile-content>
+                    {{ $t('queuing') }}
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end">
+                    {{ queuing.length + ' ' + $t('person') }}
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+                <v-list-tile-content>
+                    {{ $t('being_handled') }}
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end">
+                    {{ being_handled.length + ' ' + $t('person') }}
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+                <v-list-tile-content>
+                    {{ $t('just_finished') }}
+                </v-list-tile-content>
+                <v-list-tile-content class="align-end">
+                    {{ just_finished.length + ' ' + $t('person') }}
+                </v-list-tile-content>
+            </v-list-tile>
+        </v-list>
     </v-card>
 </template>
 
@@ -21,13 +39,30 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import moment from 'moment';
 
     export default {
         name: 'shop-info',
         computed: {
             ...mapGetters([
-                'locale'
-            ])
+                'locale',
+                'queues'
+            ]),
+            queuing() {
+                return this.queues.filter((queue) => {
+                    return queue.waiting && !queue.handled && !queue.finished;
+                });
+            },
+            being_handled() {
+                return this.queues.filter((queue) => {
+                    return queue.waiting && queue.handled && !queue.finished;
+                });
+            },
+            just_finished() {
+                return this.queues.filter((queue) => {
+                    return queue.waiting && queue.handled && queue.finished;
+                });
+            }
         },
         watch: {
             'locale'(value) {
@@ -37,20 +72,26 @@
         mounted() {
             this.$nextTick(() => {
                 this.$i18n.locale = this.locale;
-            })
-        }     
+            });
+        }
     }
 </script>
 
 <i18n>
-{
-    "id": {
-        "title": "Informasi Toko"
-    },
-    "en": {
-        "title": "Shop Information"
+    {
+        "id": {
+            "title": "Informasi Toko",
+            "queuing": "Sedang Antri",
+            "being_handled": "Sedang Dilayani",
+            "just_finished": "Baru Selesai",
+            "person": "orang"
+        },
+        "en": {
+            "title": "Shop Information",
+            "queuing": "Queuing",
+            "being_handled": "Being Handled",
+            "just_finished": "Just Finished",
+            "person": "person"
+        }
     }
-}
 </i18n>
-
-

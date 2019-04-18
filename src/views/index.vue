@@ -129,6 +129,9 @@
                                 <shop-info></shop-info>
                             </v-flex>
                             <v-flex xs12 sm4>
+                                <shop-location></shop-location>
+                            </v-flex>
+                            <v-flex xs12 sm4>
                                 <business-hours-info></business-hours-info>
                             </v-flex>
                         </v-layout>
@@ -209,14 +212,15 @@
 </style>
 
 <script>
-    import Collage01 from '../assets/collage_01.jpg'; 
+    import Collage01 from '../assets/collage_01.jpg';
     // import ImageHero from '../assets/hero.jpeg';
     // import ImageSection from '../assets/section.jpg';
     import logoPrimasakti from '../assets/logo_primasakti.svg';
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
     import QueuesInfo from '../views/partials/queues_info.vue';
-    import ShopInfo from '../views/partials/shop_info.vue';
+    import ShopLocation from '../views/partials/shop_location.vue';
+    import ShopInfo from '../views//partials//shop_info.vue';
     import BusinessHoursInfo from '../views/partials/business_hours_info.vue';
     import VueMarqueeText from 'vue-marquee-text-component';
 
@@ -224,6 +228,7 @@
         name: 'index',
         components: {
             'queues-info': QueuesInfo,
+            'shop-location': ShopLocation,
             'shop-info': ShopInfo,
             'business-hours-info': BusinessHoursInfo,
             'vue-marquee-text': VueMarqueeText
