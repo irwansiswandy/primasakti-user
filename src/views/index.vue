@@ -21,10 +21,10 @@
                 </section>
 
                 <section>
-                    <v-sheet class="transparent secondary--text pt-3 pb-3">
+                    <v-sheet class="secondary white--text pt-2 pb-2">
                         <vue-marquee-text :duration="45">
-                            <span v-for="product_category in product_categories"
-                                class="title ml-3 mr-3">
+                            <span v-for="(product_category, index) in product_categories" :key="index"
+                                  class="subheading ml-3 mr-3">
                                 {{ product_category.name }}
                             </span>
                         </vue-marquee-text>
@@ -178,10 +178,13 @@
                     <v-container fluid>
                         <v-layout row>
                             <v-flex md12 align-self-center class="text-xs-left">
-                                <v-btn small fab outline color="tertiary"
-                                       v-on:click="openLink('https://primasakti-print-shop.business.site/')">
-                                    <v-icon>fa-google</v-icon>
-                                </v-btn>
+                                <v-tooltip bottom>
+                                    <v-btn slot="activator" small fab outline color="tertiary"
+                                           v-on:click="openLink('https://primasakti-print-shop.business.site/')">
+                                        <v-icon>fa-google</v-icon>
+                                    </v-btn>
+                                    <span>{{ $t('primasakti_google_site') }}</span>
+                                </v-tooltip>
                                 <!--
                                 <v-btn small fab outline color="tertiary"
                                        v-on:click="openLink('https://primasakti-print-shop.business.site/')">
@@ -268,14 +271,16 @@
         "register": "daftar",
         "server_date": "tanggal server",
         "server_time": "waktu server",
-        "our_team": "Tim Kami"
+        "our_team": "Tim Kami",
+        "primasakti_google_site": "Primasakti di Google"
     },
     "en": {
         "login": "login",
         "register": "register",
         "server_date": "server date",
         "server_time": "server time",
-        "our_team": "Our Team"
+        "our_team": "Our Team",
+        "primasakti_google_site": "Primasakti on Google"
     }
 }
 </i18n>

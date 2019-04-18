@@ -30,9 +30,28 @@ const ResourcesPlugin = {
 		get(id) {
 			if (!id) {
 				return MyAxios.get(this.api.url);
-			}	
+			}
 			else {
 				return MyAxios.get(this.api.url + '/' + id);
+			}
+		}
+	},
+	// This handles resources for 'public_holidays'.
+	public_holidays: {
+		api: {
+			url: '/public_holidays',
+			params: {}
+		},
+		get(id) {
+			if (!id) {
+				return MyAxios.get(this.api.url, {
+					params: this.api.params
+				});
+			}
+			else {
+				return MyAxios.get(this.api.url + '/' + id, {
+					params: this.api.params
+				});
 			}
 		}
 	}

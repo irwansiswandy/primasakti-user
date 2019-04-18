@@ -6,20 +6,19 @@
             {{ $t('title') }}
         </v-card-title>
         <v-list dense class="transparent">
-            <v-list-tile v-for="(business_hour, index) in business_hours.data" :key="index"
-                         :class="getActiveBusinessHourClass(business_hour.day)">
-                <v-list-tile-content>
+            <v-list-tile v-for="(business_hour, index) in business_hours.data" :key="index">
+                <v-list-tile-content :class="getActiveBusinessHourClass(business_hour.day)">
                     {{ getDayText(business_hour.day) }}
                 </v-list-tile-content>
-                <v-list-tile-content class="align-end">
+                <v-list-tile-content :class="'align-end ' + getActiveBusinessHourClass(business_hour.day)">
                     {{ formatTime(business_hour.open) + ' - ' + formatTime(business_hour.close) }}
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile class="warning white--text mt-2">
-                <v-list-tile-content class="align-center">
-                    * {{ $t('message') }}
-                </v-list-tile-content>
-            </v-list-tile>
+            <v-card tile flat class="warning white--text mt-2">
+                <v-card-text class="caption align-center">
+                    {{ $t('message') }}
+                </v-card-text>
+            </v-card>
         </v-list>
     </v-card>
 </template>
@@ -55,7 +54,7 @@
             },
             getActiveBusinessHourClass(day_number) {
                 if (day_number == this.current_day_number) {
-                    return 'secondary white--text';
+                    return 'font-weight-black';
                 }
                 else {
                     return '';

@@ -2,37 +2,39 @@
     <v-app v-resize="handleViewportResize">
         <v-content>
 
-            <v-sheet tile color="primary lighten-1 white--text" class="pt-1 pb-1 pl-3 pr-3">
-                <v-layout row wrap>
-                    <v-flex sm6 class="text-xs-left">
-                        <span class="caption">
+            <v-card tile class="primary lighten-1 white--text pl-3 pr-3 pt-1 pb-1">
+                <v-layout row>
+                    <v-flex d-block align-self-center class="text-xs-left">
+                        <span class="caption mr-1">
                             {{ displayed_date + ' / ' + server_time }}
                         </span>
-                        <span v-if="shop_is_open"
-                              class="caption font-weight-black secondary--text ml-2">
+                        <v-chip small label class="secondary white--text caption"
+                                v-if="shop_is_open">
                             {{ $t('open') }}
-                        </span>
-                        <span v-else
-                              class="caption font-weight-black red--text ml-2">
+                        </v-chip>
+                        <v-chip small label class="error white--text caption"
+                                v-else>
                             {{ $t('closed') }}
-                        </span>
+                        </v-chip>
                     </v-flex>
-                    <v-flex sm6 class="text-xs-right">
-                        <span class="ml-2">
-                            <span class="flag-icon flag-icon-id"
-                                  style="cursor: pointer"
-                                  v-on:click="$store.dispatch('set_locale', 'id')">
+                    <v-flex d-block align-self-center class="text-xs-right">
+                        <v-tooltip bottom class="ml-2">
+                            <span slot="activator" class="flag-icon flag-icon-id"
+                                    style="cursor: pointer"
+                                    v-on:click="$store.dispatch('set_locale', 'id')">
                             </span>
-                        </span>
-                        <span class="ml-2">
-                            <span class="flag-icon flag-icon-gb"
-                                  style="cursor: pointer"
-                                  v-on:click="$store.dispatch('set_locale', 'en')">
+                            <span>Bahasa Indonesia</span>
+                        </v-tooltip>
+                        <v-tooltip bottom class="ml-2">
+                            <span slot="activator" class="flag-icon flag-icon-gb"
+                                    style="cursor: pointer"
+                                    v-on:click="$store.dispatch('set_locale', 'en')">
                             </span>
-                        </span>
+                            <span>English</span>
+                        </v-tooltip>
                     </v-flex>
                 </v-layout>
-            </v-sheet>
+            </v-card>
 
             <v-toolbar flat color="primary white--text">
                 <v-toolbar-title>
@@ -132,6 +134,7 @@
     import RegisterForm from './views/authentication/register.vue';
     import MyDialog from './components/dialog.vue';
     import TrackOrderResult from './views/track_order/result.vue';
+    import VueMarqueeText from 'vue-marquee-text-component';
 
     export default {
         name: 'app',
@@ -140,7 +143,8 @@
             'login-form': LoginForm,
             'register-form': RegisterForm,
             'my-dialog': MyDialog,
-            'track-order-result': TrackOrderResult
+            'track-order-result': TrackOrderResult,
+            'vue-marquee-text': VueMarqueeText
         },
         data() {
             return {
@@ -158,7 +162,9 @@
                 'server_time',
                 'business_hours',
                 'dialog',
-                'server_response'
+                'server_response',
+                'today_is_holiday',
+                'holidays'
             ]),
             footer_year() {
                 return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).year();
@@ -182,8 +188,13 @@
                 return business_hour;
             },
             shop_is_open() {
-                let current_datetime = this.server_date + ' ' + this.server_time;
-                return moment(current_datetime, 'YYYY-MM-DD HH:mm:ss').isBetween(this.server_date + ' ' + this.current_business_hour.open, this.server_date + ' ' + this.current_business_hour.close);
+                if (this.today_is_holiday) {
+                    return false;
+                }
+                else {
+                    let current_datetime = this.server_date + ' ' + this.server_time;
+                    return moment(current_datetime, 'YYYY-MM-DD HH:mm:ss').isBetween(this.server_date + ' ' + this.current_business_hour.open, this.server_date + ' ' + this.current_business_hour.close);
+                }
             },
             mobile_view() {
                 if (this.viewport.width < 600) {
@@ -197,6 +208,9 @@
         watch: {
             'locale'(value) {
                 return this.$i18n.locale = value;
+            },
+            'server_date'(value) {
+                return this.$store.dispatch('init_public_holidays', value);
             }
         },
         methods: {
