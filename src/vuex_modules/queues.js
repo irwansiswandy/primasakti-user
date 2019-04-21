@@ -1,34 +1,68 @@
 import ResourcesPlugin from '../plugins/resources.js';
-import MyAxios from '../plugins/axios.js'; 
+import PusherPlugin from '../plugins/pusher.js';
 
 const VuexModuleQueues = {
     state: {
         loading: true,
-        queues: []
+        data: []
     },
     getters: {
         queues(state) {
-            return state.queues;
+            return state;
         }
     },
     mutations: {
-        //
+        setQueuesData(state, [queue, index]) {
+           if (!index) {
+                return state.data.push(queue);
+           }
+           else {
+               return state.data.splice(index, 1, queue);
+           }
+        },
+        unsetQueuesData(state, index) {
+            return state.data.splice(index, 1);
+        }
     },
     actions: {
         init_queues(context) {
-            let api = {
-                url: ResourcesPlugin.queues.api.url,
-                params: ResourcesPlugin.queues.api.params
-            };
-            api.params.finished = false;
-        
-            return MyAxios.get(api.url, {
-                params: api.params
-            }).then((response) => {
-                context.commit('setState', ['queues', 'queues', response.data]);
-                return context.commit('setState', ['queues', 'loading', false]);
+            ResourcesPlugin.queues.api.params.finished = false;
+            return ResourcesPlugin.queues.get().then((response) => {
+                context.commit('setState', ['queues', 'data', response.data]);
+                context.commit('setState', ['queues', 'loading', false]);
+                return context.dispatch('init_pusher');
             }).catch((error) => {
-                return context.dispatch('set_server_response', error.response);
+                //
+            });
+        },
+        init_pusher(context) {
+            return PusherPlugin.bind('activity-log', (activity) => {
+                if (activity.subject_type == 'App\\CustomerQueue') {
+                    let queue = activity.properties.subject;
+                    if (activity.log_name == 'customer-queue-created') {
+                        return context.commit('setQueuesData', [queue]);
+                    }
+                    else if (activity.log_name == 'customer-queue-updated') {
+                        for (let i=0; i<context.state.data.length; i++) {
+                            if (context.state.data[i].id == queue.id) {
+                                return context.commit('setQueuesData', [queue, i]);
+                            }
+                            else {
+                                continue;
+                            }
+                        }
+                    }
+                    else if (activity.log_name == 'customer-queue-deleted') {
+                        for (let i=0; i<context.state.data.length; i++) {
+                            if (context.state.data[i].id == queue.id) {
+                                return context.commit('unsetQueuesData', i);
+                            }
+                            else {
+                                continue;
+                            }
+                        }
+                    }
+                }
             });
         }
     }

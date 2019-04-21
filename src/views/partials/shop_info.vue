@@ -10,7 +10,12 @@
                     {{ $t('queuing') }}
                 </v-list-tile-content>
                 <v-list-tile-content class="align-end">
-                    {{ queuing.length + ' ' + $t('person') }}
+                    <span v-if="queuing.length > 0">
+                        {{ queuing.length + ' ' + $t('person') }}
+                    </span>
+                    <span v-else>
+                        -
+                    </span>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
@@ -18,7 +23,12 @@
                     {{ $t('being_handled') }}
                 </v-list-tile-content>
                 <v-list-tile-content class="align-end">
-                    {{ being_handled.length + ' ' + $t('person') }}
+                    <span v-if="being_handled.length > 0">
+                        {{ being_handled.length + ' ' + $t('person') }}
+                    </span>
+                    <span v-else>
+                        -
+                    </span>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
@@ -26,7 +36,12 @@
                     {{ $t('just_finished') }}
                 </v-list-tile-content>
                 <v-list-tile-content class="align-end">
-                    {{ just_finished.length + ' ' + $t('person') }}
+                    <span v-if="just_finished.length > 0">
+                        {{ just_finished.length + ' ' + $t('person') }}
+                    </span>
+                    <span v-else>
+                        -
+                    </span>
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
@@ -49,17 +64,17 @@
                 'queues'
             ]),
             queuing() {
-                return this.queues.filter((queue) => {
+                return this.queues.data.filter((queue) => {
                     return queue.waiting && !queue.handled && !queue.finished;
                 });
             },
             being_handled() {
-                return this.queues.filter((queue) => {
+                return this.queues.data.filter((queue) => {
                     return queue.waiting && queue.handled && !queue.finished;
                 });
             },
             just_finished() {
-                return this.queues.filter((queue) => {
+                return this.queues.data.filter((queue) => {
                     return queue.waiting && queue.handled && queue.finished;
                 });
             }

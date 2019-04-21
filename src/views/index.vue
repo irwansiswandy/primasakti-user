@@ -21,7 +21,7 @@
                 </section>
 
                 <section>
-                    <v-sheet class="secondary white--text pt-2 pb-2">
+                    <v-sheet tile class="secondary white--text pt-2 pb-2">
                         <vue-marquee-text :duration="45">
                             <span v-for="(product_category, index) in product_categories" :key="index"
                                   class="subheading ml-3 mr-3">

@@ -6,7 +6,7 @@ const ResourcesPlugin = {
 		api: {
 			url: '/customer_queues',
 			params: {
-				includes: 'user,admin'
+				includes: 'customer,admin'
 			}
 		},
 		get(id) {

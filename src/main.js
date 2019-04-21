@@ -29,6 +29,14 @@ import '../node_modules/flag-icon-css/css/flag-icon.min.css';
 import AxiosVuePlugin from './plugins/vue/axios.js';
 Vue.use(AxiosVuePlugin);
 
+// This initializes vue's plugin for Pusher.
+import PusherVuePlugin from './plugins/vue/pusher.js';
+Vue.use(PusherVuePlugin);
+
+// This initializes vue's plugin for Resources.
+import ResourcesVuePlugin from './plugins/vue/resources.js';
+Vue.use(ResourcesVuePlugin);
+
 Vue.config.productionTip = false
 
 new Vue({
