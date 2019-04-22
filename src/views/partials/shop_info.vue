@@ -64,19 +64,40 @@
                 'queues'
             ]),
             queuing() {
-                return this.queues.data.filter((queue) => {
-                    return queue.waiting && !queue.handled && !queue.finished;
-                });
+                let value = [];
+                for (let i=0; i<this.queues.data.length; i++) {
+                    if (this.queues.data[i].waiting && !this.queues.data[i].handled && !this.queues.data[i].finished) {
+                        value.push(this.queues.data[i]);
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                return value;
             },
             being_handled() {
-                return this.queues.data.filter((queue) => {
-                    return queue.waiting && queue.handled && !queue.finished;
-                });
+                let value = [];
+                for (let i=0; i<this.queues.data.length; i++) {
+                    if (this.queues.data[i].waiting && this.queues.data[i].handled && !this.queues.data[i].finished) {
+                        value.push(this.queues.data[i]);
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                return value;
             },
             just_finished() {
-                return this.queues.data.filter((queue) => {
-                    return queue.waiting && queue.handled && queue.finished;
-                });
+                let value = [];
+                for (let i=0; i<this.queues.data.length; i++) {
+                    if (this.queues.data[i].waiting && this.queues.data[i].handled && this.queues.data[i].finished) {
+                        value.push(this.queues.data[i]);
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                return value;
             }
         },
         watch: {

@@ -45,11 +45,24 @@ const VuexModuleQueues = {
                     else if (activity.log_name == 'customer-queue-updated') {
                         for (let i=0; i<context.state.data.length; i++) {
                             if (context.state.data[i].id == queue.id) {
-                                return context.commit('setQueuesData', [queue, i]);
+                                context.commit('setQueuesData', [queue, i]);
                             }
                             else {
                                 continue;
                             }
+                        }
+                        // This deletes finished queue after 10 seconds.
+                        if (queue.finished) {
+                            setTimeout(() => {
+                                for (let i=0; i<context.state.data.length; i++) {
+                                    if (context.state.data[i].id == queue.id) {
+                                        return context.commit('unsetQueuesData', i);
+                                    }
+                                    else {
+                                        continue;
+                                    }
+                                }
+                            }, 10000);
                         }
                     }
                     else if (activity.log_name == 'customer-queue-deleted') {
