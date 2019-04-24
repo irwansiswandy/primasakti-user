@@ -7,6 +7,12 @@ module.exports = {
             .type("javascript/auto")
             .use("i18n")
             .loader("@kazupon/vue-i18n-loader")
-            .end();        
+            .end();
+        config
+            .plugin('html')
+            .tap(args => {
+                args[0].meta = { viewport: 'width=device-width,initial-scale=1,user-scalable=no' };
+                return args;
+            })        
     }
 }
