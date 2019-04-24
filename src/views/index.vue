@@ -146,7 +146,7 @@
                             </v-flex>
                         </v-layout>
                         <v-layout row wrap>
-                            <v-flex md3 v-for="admin in admins">
+                            <v-flex md3 v-for="(admin, index) in admins" :key="index">
                                 <v-card flat class="transparent">
                                     <v-card-text>
                                         <!--
@@ -164,7 +164,7 @@
                                             {{ admin.age + ', ' + admin.role.name }}
                                         </div>
                                         <div v-if="admin.contacts.length > 0">
-                                            <span v-for="contact in admin.contacts" class="caption">
+                                            <span v-for="(contact, index) in admin.contacts" :key="index" class="caption">
                                                 <v-icon small color="secondary" class="mr-1">fa-mobile</v-icon>
                                                 <v-icon small color="secondary" class="mr-1 ">fa-whatsapp</v-icon>
                                                 {{ contact.number }}
@@ -265,6 +265,12 @@
             this.$nextTick(() => {
                 this.$i18n.locale = this.locale;
             });
+        },
+        beforeCreate() {
+            let meta_element = document.createElement('meta');
+            meta_element.setAttribute('name', 'viewport');
+            meta_element.content = 'width=device-width,initial-scale=1.0';
+            document.getElementsByTagName('head')[0].appendChild(meta_element);
         }
     }
 </script>

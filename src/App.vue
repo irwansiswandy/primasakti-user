@@ -214,6 +214,9 @@
             }
         },
         methods: {
+            sendVisitorData() {
+                return this.$axios.get('/visit');
+            },
             getLanguageClass(value) {
                 if (value == this.locale) {
                     return ' font-weight-black';
@@ -325,6 +328,7 @@
             this.$store.dispatch('init_queues');
             this.$store.dispatch('init_business_hours');
             this.$store.dispatch('init_product_categories');
+            this.sendVisitorData();
         }
     }
 </script>
