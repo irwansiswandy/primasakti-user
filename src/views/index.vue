@@ -265,12 +265,6 @@
             this.$nextTick(() => {
                 this.$i18n.locale = this.locale;
             });
-        },
-        beforeCreate() {
-            let meta_element = document.createElement('meta');
-            meta_element.setAttribute('name', 'viewport');
-            meta_element.content = 'width=device-width,initial-scale=1.0';
-            document.getElementsByTagName('head')[0].appendChild(meta_element);
         }
     }
 </script>
