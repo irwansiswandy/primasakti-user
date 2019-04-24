@@ -1,9 +1,3 @@
-// This adds meta tag 'viewport' to header.
-let meta_tag = document.createElement('meta');
-meta_tag.setAttribute('name', 'viewport');
-meta_tag.content = 'width=device-width,initial-scale=1';
-document.getElementsByTagName('head')[0].appendChild(meta_tag);
-
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
