@@ -10,8 +10,8 @@
                     {{ $t('queuing') }}
                 </v-list-tile-content>
                 <v-list-tile-content class="align-end">
-                    <span v-if="queuing.length > 0">
-                        {{ queuing.length + ' ' + $t('person') }}
+                    <span v-if="waiting.length > 0">
+                        {{ waiting.length + ' ' + $t('person') }}
                     </span>
                     <span v-else>
                         -
@@ -23,8 +23,8 @@
                     {{ $t('being_handled') }}
                 </v-list-tile-content>
                 <v-list-tile-content class="align-end">
-                    <span v-if="being_handled.length > 0">
-                        {{ being_handled.length + ' ' + $t('person') }}
+                    <span v-if="handled.length > 0">
+                        {{ handled.length + ' ' + $t('person') }}
                     </span>
                     <span v-else>
                         -
@@ -36,8 +36,8 @@
                     {{ $t('just_finished') }}
                 </v-list-tile-content>
                 <v-list-tile-content class="align-end">
-                    <span v-if="just_finished.length > 0">
-                        {{ just_finished.length + ' ' + $t('person') }}
+                    <span v-if="finished.length > 0">
+                        {{ finished.length + ' ' + $t('person') }}
                     </span>
                     <span v-else>
                         -
@@ -63,41 +63,14 @@
                 'locale',
                 'queues'
             ]),
-            queuing() {
-                let value = [];
-                for (let i=0; i<this.queues.data.length; i++) {
-                    if (this.queues.data[i].waiting && !this.queues.data[i].handled && !this.queues.data[i].finished) {
-                        value.push(this.queues.data[i]);
-                    }
-                    else {
-                        continue;
-                    }
-                }
-                return value;
+            waiting() {
+                return this.queues.data.waiting;
             },
-            being_handled() {
-                let value = [];
-                for (let i=0; i<this.queues.data.length; i++) {
-                    if (this.queues.data[i].waiting && this.queues.data[i].handled && !this.queues.data[i].finished) {
-                        value.push(this.queues.data[i]);
-                    }
-                    else {
-                        continue;
-                    }
-                }
-                return value;
+            handled() {
+                return this.queues.data.handled;
             },
-            just_finished() {
-                let value = [];
-                for (let i=0; i<this.queues.data.length; i++) {
-                    if (this.queues.data[i].waiting && this.queues.data[i].handled && this.queues.data[i].finished) {
-                        value.push(this.queues.data[i]);
-                    }
-                    else {
-                        continue;
-                    }
-                }
-                return value;
+            finished() {
+                return this.queues.data.finished;
             }
         },
         watch: {

@@ -4,7 +4,11 @@ import PusherPlugin from '../plugins/pusher.js';
 const VuexModuleQueues = {
     state: {
         loading: true,
-        data: []
+        data: {
+            waiting: [],
+            handled: [],
+            finished: []
+        }
     },
     getters: {
         queues(state) {
@@ -12,23 +16,31 @@ const VuexModuleQueues = {
         }
     },
     mutations: {
-        setQueuesData(state, [queue, index]) {
+        setQueuesData(state, [key, queue, index]) {
            if (!index) {
-                return state.data.push(queue);
+                return state.data[key].push(queue);
            }
            else {
-               return state.data.splice(index, 1, queue);
+               return state.data[key].splice(index, 1, queue);
            }
         },
-        unsetQueuesData(state, index) {
-            return state.data.splice(index, 1);
+        unsetQueuesData(state, [key, index]) {
+            return state.data[key].splice(index, 1);
         }
     },
     actions: {
         init_queues(context) {
             ResourcesPlugin.queues.api.params.finished = false;
             return ResourcesPlugin.queues.get().then((response) => {
-                context.commit('setState', ['queues', 'data', response.data]);
+                context.state.data.waiting = response.data.filter((queue) => {
+                    return queue.handled === 0 && queue.finished === 0;
+                });
+                context.state.data.handled = response.data.filter((queue) => {
+                    return queue.handled === 1 && queue.finished === 0;
+                });
+                context.state.data.finished = response.data.filter((queue) => {
+                    return queue.handled === 1 && queue.finished === 1;
+                });
                 context.commit('setState', ['queues', 'loading', false]);
                 return context.dispatch('init_pusher');
             }).catch((error) => {
@@ -39,24 +51,27 @@ const VuexModuleQueues = {
             return PusherPlugin.bind('activity-log', (activity) => {
                 if (activity.subject_type == 'App\\CustomerQueue') {
                     let queue = activity.properties.subject;
+                    // This handles 'customer-queue-created'.
                     if (activity.log_name == 'customer-queue-created') {
-                        return context.commit('setQueuesData', [queue]);
+                        return context.commit('setQueuesData', ['waiting', queue]);
                     }
+                    // This handles 'customer-queue-updated'.
                     else if (activity.log_name == 'customer-queue-updated') {
-                        for (let i=0; i<context.state.data.length; i++) {
-                            if (context.state.data[i].id == queue.id) {
-                                context.commit('setQueuesData', [queue, i]);
+                        if (queue.handled == 1 && queue.finished == 1) {
+                            for (let i=0; i<context.state.data.handled.length; i++) {
+                                if (context.state.data.handled[i].id == queue.id) {
+                                    context.commit('unsetQueuesData', ['handled', i]);
+                                }
+                                else {
+                                    continue;
+                                }
                             }
-                            else {
-                                continue;
-                            }
-                        }
-                        // This deletes finished queue after 10 seconds.
-                        if (queue.finished) {
-                            setTimeout(() => {
-                                for (let i=0; i<context.state.data.length; i++) {
-                                    if (context.state.data[i].id == queue.id) {
-                                        return context.commit('unsetQueuesData', i);
+                            context.commit('setQueuesData', ['finished', queue]);
+                            // This deletes finished queue after 10 seconds.
+                            return setTimeout(() => {
+                                for (let i=0; i<context.state.data.finished.length; i++) {
+                                    if (context.state.data.finished[i].id == queue.id) {
+                                        return context.commit('unsetQueuesData', ['finished', i]);
                                     }
                                     else {
                                         continue;
@@ -64,11 +79,23 @@ const VuexModuleQueues = {
                                 }
                             }, 10000);
                         }
+                        else {
+                            for (let i=0; i<context.state.data.waiting.length; i++) {
+                                if (context.state.data.waiting[i].id == queue.id) {
+                                    context.commit('unsetQueuesData', ['waiting', i]);
+                                }
+                                else {
+                                    continue;
+                                }
+                            }
+                            return context.commit('setQueuesData', ['handled', queue]);
+                        }
                     }
+                    // This handles 'customer-queue-deleted'.
                     else if (activity.log_name == 'customer-queue-deleted') {
-                        for (let i=0; i<context.state.data.length; i++) {
-                            if (context.state.data[i].id == queue.id) {
-                                return context.commit('unsetQueuesData', i);
+                        for (let i=0; i<context.state.data.waiting.length; i++) {
+                            if (context.state.data.waiting[i].id == queue.id) {
+                                return context.commit('unsetQueuesData', ['waiting', i]);
                             }
                             else {
                                 continue;
