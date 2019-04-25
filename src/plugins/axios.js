@@ -8,7 +8,7 @@ const MyAxios = axios.create({
     	retryDelay: 1000
     },
     baseURL: BaseApiURL,
-    timeout: 10000
+    timeout: 20000
 });
 
 export default MyAxios;
