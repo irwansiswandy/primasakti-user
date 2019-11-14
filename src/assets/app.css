@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "GlacialIndifference";
+    src: url("./fonts/glacialindifference-regular-webfont.woff");
+    src: url("./fonts/glacialindifference-regular-webfont.woff2");
+}
+
+.font-logo {
+    font-family: "GlacialIndifference";
+}

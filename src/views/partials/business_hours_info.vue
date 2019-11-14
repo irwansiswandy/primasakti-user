@@ -4,6 +4,9 @@
             v-if="!business_hours.loading">
         <v-card-title class="headline justify-center">
             {{ $t('title') }}
+            <v-chip small label outline color="error" class="caption">
+                {{ $t('message') }}
+            </v-chip>
         </v-card-title>
         <v-list dense class="transparent">
             <v-list-tile v-for="(business_hour, index) in business_hours.data" :key="index">
@@ -14,11 +17,6 @@
                     {{ formatTime(business_hour.open) + ' - ' + formatTime(business_hour.close) }}
                 </v-list-tile-content>
             </v-list-tile>
-            <v-card tile flat class="warning white--text mt-2">
-                <v-card-text class="caption align-center">
-                    {{ $t('message') }}
-                </v-card-text>
-            </v-card>
         </v-list>
     </v-card>
 </template>
@@ -54,10 +52,10 @@
             },
             getActiveBusinessHourClass(day_number) {
                 if (day_number == this.current_day_number) {
-                    return 'font-weight-black';
+                    return 'secondary white--text pa-2';
                 }
                 else {
-                    return '';
+                    return 'pa-2';
                 }
             },
             formatTime(time) {
@@ -76,7 +74,7 @@
 {
     "id": {
         "title": "Hari / Jam Kerja",
-        "message": "Hari raya / libur nasional kami tutup"
+        "message": "Hari libur nasional kami tutup"
     },
     "en": {
         "title": "Business Hours",

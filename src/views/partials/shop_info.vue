@@ -3,6 +3,9 @@
             flat class="transparent">
         <v-card-title class="headline justify-center">
             {{ $t('title') }}
+            <v-chip small label dark outline color="secondary caption" class="ml-2">
+                LIVE
+            </v-chip>
         </v-card-title>
         <v-list dense class="transparent">
             <v-list-tile>
@@ -90,16 +93,16 @@
     {
         "id": {
             "title": "Informasi Toko",
-            "queuing": "Sedang Antri",
-            "being_handled": "Sedang Dilayani",
-            "just_finished": "Baru Selesai",
+            "queuing": "Sedang antri",
+            "being_handled": "Sedang dilayani",
+            "just_finished": "Baru selesai",
             "person": "orang"
         },
         "en": {
             "title": "Shop Information",
             "queuing": "Queuing",
-            "being_handled": "Being Handled",
-            "just_finished": "Just Finished",
+            "being_handled": "Being handled",
+            "just_finished": "Just finished",
             "person": "person"
         }
     }

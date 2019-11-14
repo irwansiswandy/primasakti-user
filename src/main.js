@@ -39,6 +39,9 @@ Vue.use(ResourcesVuePlugin);
 
 Vue.config.productionTip = false
 
+// Import app.css
+import './assets/app.css';
+
 new Vue({
   router,
   store,

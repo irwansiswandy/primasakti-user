@@ -36,12 +36,12 @@
                 </v-layout>
             </v-card>
 
-            <v-toolbar flat color="primary white--text">
+            <v-toolbar flat dark color="primary">
                 <v-toolbar-title>
-                    <h4 style="cursor: pointer"
+                    <h2 class="font-logo" style="cursor: pointer"
                         v-on:click="$router.replace('/')">
-                        Primasakti
-                    </h4>
+                        primasakti
+                    </h2>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn small color="secondary white--text"
@@ -127,8 +127,9 @@
 </style>
 
 <script>
+    import { ServerHostname } from './_variables';
     import moment from 'moment';
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import TrackOrder from './views/track_order/input_form.vue';
     import LoginForm from './views/authentication/login.vue';
     import RegisterForm from './views/authentication/register.vue';
@@ -214,6 +215,30 @@
             }
         },
         methods: {
+            ...mapActions([
+                'set_locale',
+                'init_server_datetime',
+                'init_admins',
+                'init_queues',
+                'init_business_hours',
+                'init_categories'
+            ]),
+            initServerDateTime() {
+                return this.$axios
+                .request({
+                    url: ServerHostname,
+                    method: 'get'
+                })
+                .then((response) => {
+                    let server_date = response.data.date;
+                    let server_time = response.data.time;
+                    let server_datetime = server_date + ' ' + server_time;
+                    return this.init_server_datetime(server_datetime);
+                })
+                .catch((error) => {
+                    //
+                });
+            },
             sendVisitLog() {
                 return this.$axios.get('/');
             },
@@ -322,12 +347,12 @@
             }
         },
         mounted() {
-            this.$store.dispatch('set_locale', 'id');
-            this.$store.dispatch('init_server_datetime');
-            this.$store.dispatch('init_admins');
-            this.$store.dispatch('init_queues');
-            this.$store.dispatch('init_business_hours');
-            this.$store.dispatch('init_product_categories');
+            this.set_locale('id');
+            this.initServerDateTime();
+            this.init_admins();
+            this.init_queues();
+            this.init_business_hours();
+            this.init_categories();
             this.sendVisitLog();
         }
     }

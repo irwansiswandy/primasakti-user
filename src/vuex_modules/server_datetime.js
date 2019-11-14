@@ -72,35 +72,29 @@ const VuexModuleServerDateTime = {
         }
     },
     actions: {
-        init_server_datetime(context) {
-            return MyAxios.get('/date_time')
-                          .then((response) => {
-                              let date = _.split(response.data, ' ')[0];
-                              let time = _.split(response.data, ' ')[1];
-                              // This sets 'day', 'month', 'year'
-                              let year = Number(_.split(date, '-')[0]);
-                              let month = Number(_.split(date, '-')[1]);
-                              let day = Number(_.split(date, '-')[2]);
-                              let weekday = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').weekday();
-                              context.commit('setState', ['server_datetime', 'year', year]);
-                              context.commit('setState', ['server_datetime', 'month', month]);
-                              context.commit('setState', ['server_datetime', 'day', day]);
-                              context.commit('setState', ['server_datetime', 'weekday', weekday]);
-                              // This sets 'hours', 'minutes', 'seconds'
-                              let hours = Number(_.split(time, ':')[0]);
-                              let minutes = Number(_.split(time, ':')[1]);
-                              let seconds = Number(_.split(time, ':')[2]);
-                              context.commit('setState', ['server_datetime', 'hours', hours]);
-                              context.commit('setState', ['server_datetime', 'minutes', minutes]);
-                              context.commit('setState', ['server_datetime', 'seconds', seconds]);
-                              // This starts run time & date
-                              return setTimeout(() => {
-                                  return context.dispatch('run_server_datetime');
-                              }, 1000);
-                          })
-                          .catch((error) => {
-                              //
-                          });
+        init_server_datetime(context, datetime) {
+            let date = _.split(datetime, ' ')[0];
+            let time = _.split(datetime, ' ')[1];
+            // This sets 'day', 'month', 'year'
+            let year = Number(_.split(date, '-')[0]);
+            let month = Number(_.split(date, '-')[1]);
+            let day = Number(_.split(date, '-')[2]);
+            let weekday = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').weekday();
+            context.commit('setState', ['server_datetime', 'year', year]);
+            context.commit('setState', ['server_datetime', 'month', month]);
+            context.commit('setState', ['server_datetime', 'day', day]);
+            context.commit('setState', ['server_datetime', 'weekday', weekday]);
+            // This sets 'hours', 'minutes', 'seconds'
+            let hours = Number(_.split(time, ':')[0]);
+            let minutes = Number(_.split(time, ':')[1]);
+            let seconds = Number(_.split(time, ':')[2]);
+            context.commit('setState', ['server_datetime', 'hours', hours]);
+            context.commit('setState', ['server_datetime', 'minutes', minutes]);
+            context.commit('setState', ['server_datetime', 'seconds', seconds]);
+            // This starts run time & date
+            return setTimeout(() => {
+                return context.dispatch('run_server_datetime');
+            }, 1000);
         },
         run_server_datetime(context) {
             return setInterval(() => {

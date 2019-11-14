@@ -7,11 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "axios-retry": "^3.1.2",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.23.0",
     "pusher-js": "^4.4.0",
@@ -26,6 +26,7 @@
     "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.4.1",
     "@vue/cli-service": "^3.6.0",
+    "css-loader": "^3.2.0",
     "vue-template-compiler": "^2.6.10"
   }
 }

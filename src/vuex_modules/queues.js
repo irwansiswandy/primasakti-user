@@ -1,5 +1,7 @@
 import ResourcesPlugin from '../plugins/resources.js';
 import PusherPlugin from '../plugins/pusher.js';
+import MyAxios from '../plugins//axios.js';
+import Vue from 'vue';
 
 const VuexModuleQueues = {
     state: {
@@ -30,20 +32,30 @@ const VuexModuleQueues = {
     },
     actions: {
         init_queues(context) {
-            ResourcesPlugin.queues.api.params.finished = false;
-            return ResourcesPlugin.queues.get().then((response) => {
-                context.state.data.waiting = response.data.filter((queue) => {
-                    return queue.handled === 0 && queue.finished === 0;
-                });
-                context.state.data.handled = response.data.filter((queue) => {
-                    return queue.handled === 1 && queue.finished === 0;
-                });
-                context.state.data.finished = response.data.filter((queue) => {
-                    return queue.handled === 1 && queue.finished === 1;
-                });
-                context.commit('setState', ['queues', 'loading', false]);
+            return MyAxios
+            .get('customer_queues', {
+                params: {
+                    finished: false
+                }
+            })
+            .then((response) => {
+                let queues = response.data;
+                // This sets waiting queues.
+                Vue.set(context.state.data, 'waiting', queues.filter((queue) => {
+                    return !queue.handled && !queue.finished;
+                }));
+                // This sets handled queues.
+                Vue.set(context.state.data, 'handled', queues.filter((queue) => {
+                    return queue.handled && !queue.finished;
+                }));
+                // This sets finished queues.
+                Vue.set(context.state.data, 'finished', queues.filter((queue) => {
+                    return queue.handled && queue.finished;
+                }));
+                Vue.set(context.state, 'loading', false);
                 return context.dispatch('init_pusher');
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 //
             });
         },

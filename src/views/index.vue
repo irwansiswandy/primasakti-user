@@ -6,10 +6,7 @@
                 <section>
                     <v-parallax :src="images[0]" height="570">
                         <v-layout column align-center justify-center class="white--text">
-                            <img src="../assets/logo_primasakti.svg" alt="Vuetify.js" height="250">
-                            <div class="white--text mt-2 mb-2 title text-xs-center">
-                                Digital Copy & Print Shop
-                            </div>
+                            <img src="../assets/images/logo.svg" alt="Vuetify.js" height="250">
                             <!--
                             <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
                             <v-btn class="secondary mt-5" dark large href="/pre-made-themes">
@@ -23,9 +20,9 @@
                 <section>
                     <v-sheet tile class="secondary white--text pt-2 pb-2">
                         <vue-marquee-text :duration="45">
-                            <span v-for="(product_category, index) in product_categories" :key="index"
+                            <span v-for="(category, index) in categories" :key="index"
                                   class="subheading ml-3 mr-3">
-                                {{ product_category.name }}
+                                {{ category.name }}
                             </span>
                         </vue-marquee-text>
                     </v-sheet>
@@ -215,7 +212,7 @@
     import Collage01 from '../assets/collage_01.jpg';
     // import ImageHero from '../assets/hero.jpeg';
     // import ImageSection from '../assets/section.jpg';
-    import logoPrimasakti from '../assets/logo_primasakti.svg';
+    import Logo from '../assets/images/logo.svg';
     import { ServerURL } from '../_variables.js';
     import { mapGetters } from 'vuex';
     import QueuesInfo from '../views/partials/queues_info.vue';
@@ -239,7 +236,7 @@
                     Collage01,
                     // ImageHero,
                     // ImageSection,
-                    logoPrimasakti
+                    Logo
                 ]
             };
         },
@@ -247,7 +244,7 @@
             ...mapGetters([
                 'locale',
                 'admins',
-                'product_categories'
+                'categories'
             ]),
         },
         watch: {
