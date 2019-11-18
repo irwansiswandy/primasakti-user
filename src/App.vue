@@ -6,7 +6,7 @@
                 <v-layout row>
                     <v-flex d-block align-self-center class="text-xs-left">
                         <span class="caption mr-1">
-                            {{ displayed_date + ' / ' + server_time }}
+                            {{ displayed_date + ' | ' + server_time }}
                         </span>
                         <v-chip small label class="secondary white--text caption"
                                 v-if="shop_is_open">
@@ -171,7 +171,7 @@
                 return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).year();
             },
             displayed_date() {
-                return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).format('dddd, DD MMMM YYYY');
+                return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).format('dddd, DD/MM/YYYY');
             },
             current_day_number() {
                 return moment(this.server_date, 'YYYY-MM-DD').locale(this.locale).day();

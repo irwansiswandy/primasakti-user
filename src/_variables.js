@@ -1,7 +1,7 @@
 window._ = require('lodash');
 
 const ServerHostname = 'http://localhost:81/';
-// const ServerHostname = 'http://primasakti-network.ddns.net:281';
+// const ServerHostname = 'http://primasakti-network.ddns.net:281/';
 
 const BaseApiURL = ServerHostname + 'api/';
 const PUSHER_SETTINGS = {
