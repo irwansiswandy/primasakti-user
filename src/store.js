@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     mutations: {
         setState(state, [module_name, key, value]) {
-            return state[module_name][key] = value;
+            return Vue.set(state[module_name], key, value);
         }
     }
 });

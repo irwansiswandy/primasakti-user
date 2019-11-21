@@ -75,14 +75,7 @@
                        v-on:action="handleMyDialogAction">
                 <div v-if="dialog.content">
                     <span v-if="dialog.content == 'track-order'">
-                        <track-order ref="trackOrder"
-                                     v-on:clear="handleTrackOrderClear"
-                                     v-on:submit-success="handleTrackOrderSubmitSuccess"
-                                     v-on:submit-error="handleTrackOrderSubmitError">
-                        </track-order>
-                        <track-order-result v-if="dialog.content == 'track-order' && server_response.status == 200 && Object.keys(server_response.data).length > 0"
-                                            :order="server_response.data">
-                        </track-order-result>
+                        <track-order ref="trackOrder"></track-order>
                     </span>
                     <span v-else-if="dialog.content == 'login'">
                         <login-form></login-form>
@@ -99,7 +92,7 @@
 
         <v-footer class="tertiary white--text justify-center">
             <span class="caption">
-                &copy {{ footer_year }} - All Rights Reserved - UD. Primasakti - by irwansiswandy
+                &copy {{ footer_year }} - All Rights Reserved - UD. Primasakti - developed by irwansiswandymks@gmail.com
             </span>
         </v-footer>
 
@@ -134,7 +127,6 @@
     import LoginForm from './views/authentication/login.vue';
     import RegisterForm from './views/authentication/register.vue';
     import MyDialog from './components/dialog.vue';
-    import TrackOrderResult from './views/track_order/result.vue';
     import VueMarqueeText from 'vue-marquee-text-component';
 
     export default {
@@ -144,7 +136,6 @@
             'login-form': LoginForm,
             'register-form': RegisterForm,
             'my-dialog': MyDialog,
-            'track-order-result': TrackOrderResult,
             'vue-marquee-text': VueMarqueeText
         },
         data() {
@@ -259,15 +250,15 @@
                     if (this.locale == 'id') {
                         title = 'Lacak Order';
                         actions.push(
-                            { name: 'close', text: 'tutup' },
-                            { name: 'track_order', text: 'lacak' }
+                            { name: 'close', text: 'tutup', color: 'tertiary' },
+                            { name: 'track_order', text: 'lacak', color: 'secondary' }
                         );
                     }
                     else if (this.locale == 'en') {
                         title = 'Track Order';
                         actions.push(
-                            { name: 'close', text: 'close' },
-                            { name: 'track_order', text: 'track' }
+                            { name: 'close', text: 'close', color: 'tertiary' },
+                            { name: 'track_order', text: 'track', color: 'secondary' }
                         );
                     }
                 }
@@ -327,17 +318,6 @@
                 else if (name == 'register') {
                     this.$store.dispatch('set_dialog', ['loading', true]);
                 }
-            },
-            handleTrackOrderClear() {
-                this.$store.dispatch('reset_server_response');
-            },
-            handleTrackOrderSubmitSuccess(response) {
-                this.$store.dispatch('set_dialog', ['loading', false]);
-                return this.$store.dispatch('set_server_response', response);
-            },
-            handleTrackOrderSubmitError(response) {
-                this.$store.dispatch('set_dialog', ['loading', false]);
-                return this.$store.dispatch('set_server_response', response);
             },
             handleViewportResize() {
                 return [

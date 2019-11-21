@@ -1,22 +1,27 @@
 <template>
-    <div id="track-order-result">
-        <v-text-field :color="color"
-                      :prepend-icon="icon"
-                      :label="$t('label')"
-                      :hint="$t('hint')"
-                      clearable
-                      @click:clear="$emit('clear')"
-                      :error="text_field_error"
-                      :error-messages="text_field_error_messages"
-                      v-model="order_no">
-        </v-text-field>
-        <v-alert type="error"
-                 v-model="order_not_found">
-            <span class="caption">
-                {{ $t('not_found_message') }}
-            </span>
-        </v-alert>
-    </div>
+    <v-layout row wrap>
+        <v-flex sm12>
+            <v-text-field :color="color"
+                          :prepend-icon="icon"
+                          :label="$t('label')"
+                          :hint="$t('hint')"
+                          clearable
+                          @click:clear="$emit('clear')"
+                          :error="text_field_error"
+                          :error-messages="text_field_error_messages"
+                          v-model="order_no">
+            </v-text-field>
+            <v-alert type="error"
+                     v-model="order_not_found">
+                <span class="caption">
+                    {{ $t('not_found_message') }}
+                </span>
+            </v-alert>
+            <track-order-result v-if="order_found"
+                                :order="server_response.data">
+            </track-order-result>
+        </v-flex>
+    </v-layout>
 </template>
 
 <style>
@@ -24,12 +29,11 @@
 </style>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import MyAxios from '../../plugins/axios.js';
+    import { mapGetters, mapActions } from 'vuex';
     import TrackOrderResult from './result.vue';
 
     export default {
-        name: 'track-order-result',
+        name: 'track-order-input-form',
         props: {
             color: {
                 type: String,
@@ -54,7 +58,7 @@
             }
         },
         components: {
-            'track-order-result': TrackOrderResult
+            TrackOrderResult
         },
         data() {
             return {
@@ -105,19 +109,27 @@
             }
         },
         methods: {
+            ...mapActions([
+                'set_dialog',
+                'reset_dialog',
+                'set_server_response',
+                'reset_server_response'
+            ]),
             submit() {
-                return MyAxios.post('/track_order', {
-                    order_no: this.order_no
+                return this.$axios.post('/track_order', {
+                    order_no: this.order_no,
                 }).then((response) => {
-                    return this.$emit('submit-success', response);
+                    this.set_server_response(response);
+                    return this.set_dialog(['loading', false]);
                 }).catch((error) => {
-                    return this.$emit('submit-error', error.response);
+                    this.set_server_response(error.response);
+                    return this.set_dialog(['loading', false]);
                 });
             }
         },
         mounted() {
             this.$nextTick(() => {
-                this.$i18n.locale = this.locale;
+                return this.$i18n.locale = this.locale;
             });
         }
     }
@@ -127,8 +139,8 @@
 {
     "id": {
         "label": "Nomor order",
-        "hint": "Ketikkan nomor order anda",
-        "not_found_message": "Order tidak ditemukan. Pastikan nomor order yang anda masukkan sudah benar. Contoh nomor order : PS-ORD-XXXXXXX-XX" 
+        "hint": "Masukkan nomor order anda",
+        "not_found_message": "Order tidak ditemukan. Pastikan nomor order yang anda masukkan sudah benar. Contoh nomor order : PS-ORD-XXXXXXX-XX"
     },
     "en": {
         "label": "Order number",
@@ -138,5 +150,3 @@
     }
 }
 </i18n>
-
-

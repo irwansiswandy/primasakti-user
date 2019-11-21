@@ -1,4 +1,6 @@
-const VuexModuleDialog = {
+import Vue from 'vue';
+
+export default {
     state: {
         show: false,
         loading: false,
@@ -12,12 +14,9 @@ const VuexModuleDialog = {
             return state;
         }
     },
-    mutations: {
-
-    },
     actions: {
         'set_dialog'(context, [key, value]) {
-            return context.commit('setState', ['dialog', key, value]);
+            return Vue.set(context.state, key, value);
         },
         'reset_dialog'(context) {
             return [
@@ -29,5 +28,3 @@ const VuexModuleDialog = {
         }
     }
 };
-
-export default VuexModuleDialog;

@@ -148,16 +148,16 @@
                                     </v-btn>
                                     <span>{{ $t('primasakti_google_site') }}</span>
                                 </v-tooltip>
+                                <!--
                                 <v-tooltip bottom>
                                     <v-btn slot="activator"
                                            dark small fab color="green"
                                            v-on:click="openLink('https://primasakti-print-shop.business.site/')">
-                                        <v-icon>
-                                            <!-- -->
-                                        </v-icon>
+                                        <v-icon></v-icon>
                                     </v-btn>
                                     <span>{{ $t('primasakti_google_site') }}</span>
                                 </v-tooltip>
+                                -->
                             </v-flex>
                         </v-layout>
                     </v-container>

@@ -6,7 +6,7 @@
               :value="dialog.show">
         <v-card flat tile>
             <span v-if="!fullscreen">
-                <!-- Normal dialog view -->
+                <!-- NORMAL DIALOG VIEW -->
                 <v-card-title v-if="dialog.title"
                           class="title primary--text">
                     {{ dialog.title }}
@@ -18,9 +18,13 @@
                     <v-card-actions v-if="dialog.actions.length > 0">
                         <v-spacer></v-spacer>
                         <template v-for="action in dialog.actions">
-                            <v-btn flat color="secondary" :loading="action.loading"
-                                    v-on:click="$emit('action', action.name)">
-                                <h4>{{ action.text }}</h4>
+                            <v-btn small flat
+                                   :color="getColor(action)"
+                                   :loading="action.loading"
+                                   v-on:click="$emit('action', action.name)">
+                                <span class="caption font-weight-bold">
+                                    {{ action.text }}
+                                </span>
                             </v-btn>
                         </template>
                     </v-card-actions>
@@ -33,10 +37,10 @@
                     </v-card-text>
                     <v-card-actions></v-card-actions>
                 </span>
-                <!-- / Normal dialog view -->
+                <!-- / NORMAL DIALOG VIEW -->
             </span>
             <span v-else>
-                <!-- Fullscreen dialog view -->
+                <!-- FULLSCREEN DIALOG VIEW -->
                 <v-toolbar dark color="secondary">
                     <v-toolbar-title>
                         {{ $t('track_order') }}
@@ -45,8 +49,11 @@
                     <v-toolbar-items>
                         <template v-for="action in dialog.actions">
                             <v-btn flat
+                                   class="font-weight-bold"
                                    v-on:click="$emit('action', action.name)">
-                                {{ action.text }}
+                                <span class="caption font-weight-bold">
+                                    {{ action.text }}
+                                </span>
                             </v-btn>
                         </template>
                     </v-toolbar-items>
@@ -54,7 +61,7 @@
                 <v-card-text>
                     <slot name="default"></slot>
                 </v-card-text>
-                <!-- / Fullscreen dialog view -->
+                <!-- / FULLSCREEN DIALOG VIEW -->
             </span>
         </v-card>
     </v-dialog>
@@ -89,8 +96,16 @@
             ...mapGetters([
                 'dialog'
             ])
-        }   
+        },
+        methods: {
+            getColor(action) {
+                if (action.color) {
+                    return action.color;
+                }
+                else {
+                    return undefined;
+                }
+            }
+        }
     }
 </script>
-
-

@@ -1,33 +1,30 @@
-const VuexModuleServerResponse = {
+import Vue from 'vue';
+
+export default {
     state: {
         status: '',
         statusText: '',
-        data: {}  
+        data: {}
     },
     getters: {
         server_response(state) {
             return state;
         }
     },
-    mutations: {
-
-    },
     actions: {
         set_server_response(context, response) {
             return [
-                context.commit('setState', ['server_response', 'status', response.status]),
-                context.commit('setState', ['server_response', 'statusText', response.statusText]),
-                context.commit('setState', ['server_response', 'data', response.data])
+                Vue.set(context.state, 'status', response.status),
+                Vue.set(context.state, 'statusText', response.statusText),
+                Vue.set(context.state, 'data', response.data)
             ];
         },
         reset_server_response(context) {
             return [
-                context.commit('setState', ['server_response', 'status', '']),
-                context.commit('setState', ['server_response', 'statusText', '']),
-                context.commit('setState', ['server_response', 'data', {}])
+                Vue.set(context.state, 'status', ''),
+                Vue.set(context.state, 'statusText', ''),
+                Vue.set(context.state, 'data', {})
             ];
         }
     }
 };
-
-export default VuexModuleServerResponse;
