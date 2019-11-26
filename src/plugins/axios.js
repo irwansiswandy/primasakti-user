@@ -18,4 +18,11 @@ const MyAxios = axios.create({
     headers: defaultHeaders()
 });
 
+axiosRetry(MyAxios, {
+    retries: 2,
+    retryDelay: () => {
+        return 1000;
+    }
+});
+
 export default MyAxios;
