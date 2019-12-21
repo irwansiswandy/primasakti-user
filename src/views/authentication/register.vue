@@ -1,27 +1,38 @@
 <template>
-    <v-layout id="register"
-              row wrap>
-        <v-flex md12>
-            <v-text-field type="text" color="secondary" :label="$t('first_name')"
-                          v-model="first_name">
-            </v-text-field>
-            <v-text-field type="text" color="secondary" :label="$t('last_name')"
-                          v-model="last_name">
-            </v-text-field>
-            <select-date type="date" :label="$t('birthday')"
-                         v-model="birthday">
-            </select-date>
-            <v-text-field type="text" color="secondary" :label="$t('email_address')"
-                          v-model="email">
-            </v-text-field>
-            <v-text-field type="text" color="secondary" :label="$t('password')"
-                          v-model="password">
-            </v-text-field>
-            <v-text-field type="text" color="secondary" :placeholder="$t('password_confirmation')"
-                          v-model="password_confirmation">
-            </v-text-field>
-        </v-flex>
-    </v-layout>
+    <v-container fluid grid-list-lg class="pa-0">
+        <v-layout row wrap>
+            <v-flex sm6>
+                <v-text-field type="text" color="secondary" :label="$t('first_name')"
+                              v-model="first_name">
+                </v-text-field>
+            </v-flex>
+            <v-flex sm6>
+                <v-text-field type="text" color="secondary" :label="$t('last_name')"
+                              v-model="last_name">
+                </v-text-field>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap>
+            <v-flex sm12>
+                <select-date type="date" :label="$t('birthday')"
+                             v-model="birthday">
+                </select-date>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap>
+            <v-flex sm12>
+                <v-text-field type="text" color="secondary" :label="$t('email_address')"
+                              v-model="email">
+                </v-text-field>
+                <v-text-field type="text" color="secondary" :label="$t('password')"
+                              v-model="password">
+                </v-text-field>
+                <v-text-field type="text" color="secondary" :placeholder="$t('password_confirmation')"
+                              v-model="password_confirmation">
+                </v-text-field>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <style>

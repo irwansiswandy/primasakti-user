@@ -79,7 +79,7 @@ const VuexModuleServerDateTime = {
             let year = Number(_.split(date, '-')[0]);
             let month = Number(_.split(date, '-')[1]);
             let day = Number(_.split(date, '-')[2]);
-            let weekday = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').weekday();
+            let weekday = moment({ year: year, month: month, day: day}).weekday();
             context.commit('setState', ['server_datetime', 'year', year]);
             context.commit('setState', ['server_datetime', 'month', month]);
             context.commit('setState', ['server_datetime', 'day', day]);

@@ -48,7 +48,6 @@
                        v-on:click="showMyDialog('track-order')">
                     <span class="caption">{{ $t('track_order') }}</span>
                 </v-btn>
-                <!--
                 <v-toolbar-items v-if="!user_is_authenticated">
                     <v-menu offset-y>
                         <v-btn slot="activator" dark icon>
@@ -68,10 +67,9 @@
                         </v-list>
                     </v-menu>
                 </v-toolbar-items>
-                -->
             </v-toolbar>
 
-            <my-dialog :fullscreen="mobile_view"
+            <my-dialog width="500" :fullscreen="mobile_view"
                        v-on:action="handleMyDialogAction">
                 <div v-if="dialog.content">
                     <span v-if="dialog.content == 'track-order'">
@@ -101,7 +99,8 @@
 
 <style>
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
+        font-family: 'GlacialIndifference';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;

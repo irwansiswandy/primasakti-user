@@ -72,7 +72,10 @@
                                                         <div v-if="admin.contacts.length > 0">
                                                             <span v-for="(contact, index) in admin.contacts" :key="index" class="caption">
                                                                 <v-icon small color="secondary" class="mr-1">fa-mobile</v-icon>
-                                                                <v-icon small color="secondary" class="mr-1 ">fa-whatsapp</v-icon>
+                                                                <v-icon small color="secondary" class="mr-1 "
+                                                                        @click="openLink('https://wa.me/' + contact.number)">
+                                                                    fa-whatsapp
+                                                                </v-icon>
                                                                 {{ contact.number }}
                                                             </span>
                                                         </div>
@@ -141,6 +144,17 @@
                         <v-layout row>
                             <v-flex md12 align-self-center class="text-xs-left">
                                 <v-tooltip bottom>
+                                    <img src="../assets/svgs/google_my_business.svg" slot="activator" height="40" class="svg-link ml-2 mr-2"
+                                         @click="openLink('https://primasakti-print-shop.business.site/')">
+                                    <span>{{ $t('primasakti_google') }}</span>
+                                </v-tooltip>
+                                <v-tooltip bottom>
+                                    <img src="../assets/svgs/tokopedia.svg" slot="activator" height="40" class="svg-link ml-2 mr-2"
+                                         @click="openLink('https://www.tokopedia.com/jettprint')">
+                                    <span>{{ $t('primasakti_tokopedia') }}</span>
+                                </v-tooltip>
+                                <!--
+                                <v-tooltip bottom>
                                     <v-btn slot="activator"
                                            dark small fab color="blue"
                                            v-on:click="openLink('https://primasakti-print-shop.business.site/')">
@@ -148,6 +162,7 @@
                                     </v-btn>
                                     <span>{{ $t('primasakti_google_site') }}</span>
                                 </v-tooltip>
+                                -->
                                 <!--
                                 <v-tooltip bottom>
                                     <v-btn slot="activator"
@@ -173,6 +188,9 @@
     #parallax-1 {
         background-image: url('../assets/triangle_background_tertiary.svg');
         background-repeat: repeat;
+    }
+    .svg-link {
+        cursor: pointer;
     }
 </style>
 
@@ -249,7 +267,8 @@
         "server_time": "waktu server",
         "bosses": "Pimpinan",
         "our_team": "Staff Kami",
-        "primasakti_google_site": "Primasakti di Google"
+        "primasakti_google": "Primasakti di Google",
+        "primasakti_tokopedia": "Primasakti di Tokopedia"
     },
     "en": {
         "login": "login",
@@ -258,7 +277,8 @@
         "server_time": "server time",
         "bosses": "Chief Officers",
         "our_team": "Officers",
-        "primasakti_google_site": "Primasakti on Google"
+        "primasakti_google": "Primasakti on Google",
+        "primasakti_tokopedia": "Primasakti di Tokopedia"
     }
 }
 </i18n>
