@@ -48,6 +48,7 @@
                        v-on:click="showMyDialog('track-order')">
                     <span class="caption">{{ $t('track_order') }}</span>
                 </v-btn>
+                <!--
                 <v-toolbar-items v-if="!user_is_authenticated">
                     <v-menu offset-y>
                         <v-btn slot="activator" dark icon>
@@ -67,6 +68,7 @@
                         </v-list>
                     </v-menu>
                 </v-toolbar-items>
+                -->
             </v-toolbar>
 
             <my-dialog width="500" :fullscreen="mobile_view"
