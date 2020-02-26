@@ -1,4 +1,5 @@
 import ResourcesPlugin from '../plugins/resources.js';
+import Vue from 'vue';
 
 const VuexModuleBusinessHours = {
     state: {
@@ -12,10 +13,13 @@ const VuexModuleBusinessHours = {
     },
     actions: {
         init_business_hours(context) {
-            return ResourcesPlugin.business_hours.get().then((response) => {
-                context.commit('setState', ['business_hours', 'data', response.data]);
-                return context.commit('setState', ['business_hours', 'loading', false]);
-            }).catch((error) => {
+            return ResourcesPlugin.business_hours
+            .get()
+            .then((response) => {
+                Vue.set(context.state, 'data', response.data);
+                return Vue.set(context.state, 'loading', false);
+            })
+            .catch((error) => {
                 //
             });
         }

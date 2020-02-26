@@ -1,5 +1,6 @@
 import MyAxios from '../plugins/axios.js';
 import moment from 'moment';
+import Vue from 'vue';
 
 function formatDisplayedValue(value) {
     if (value < 10) {
@@ -12,6 +13,7 @@ function formatDisplayedValue(value) {
 
 const VuexModuleServerDateTime = {
     state: {
+        timezone: '',
         weekday: '',
         day: '',
         month: '',
@@ -72,7 +74,10 @@ const VuexModuleServerDateTime = {
         }
     },
     actions: {
-        init_server_datetime(context, datetime) {
+        init_server_datetime(context, payload) {
+            let timezone = payload.timezone;
+            Vue.set(context.state, 'timezone', timezone);
+            let datetime = payload.datetime;
             let date = _.split(datetime, ' ')[0];
             let time = _.split(datetime, ' ')[1];
             // This sets 'day', 'month', 'year'

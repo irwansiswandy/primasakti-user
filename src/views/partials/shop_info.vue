@@ -48,6 +48,14 @@
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn small flat color="secondary"
+                   @click="$router.push('/queues')">
+                {{ $t('view_queues') }}
+            </v-btn>
+            <v-spacer></v-spacer>
+        </v-card-actions>
     </v-card>
 </template>
 
@@ -96,14 +104,16 @@
             "queuing": "Sedang antri",
             "being_handled": "Sedang dilayani",
             "just_finished": "Baru selesai",
-            "person": "orang"
+            "person": "orang",
+            "view_queues": "Lihat Antrian"
         },
         "en": {
             "title": "Shop Information",
             "queuing": "Queuing",
             "being_handled": "Being handled",
             "just_finished": "Just finished",
-            "person": "person"
+            "person": "person",
+            "view_queues": "View Queues"
         }
     }
 </i18n>

@@ -222,10 +222,7 @@
                     method: 'get'
                 })
                 .then((response) => {
-                    let server_date = response.data.date;
-                    let server_time = response.data.time;
-                    let server_datetime = server_date + ' ' + server_time;
-                    return this.init_server_datetime(server_datetime);
+                    return this.init_server_datetime(response.data);
                 })
                 .catch((error) => {
                     //
