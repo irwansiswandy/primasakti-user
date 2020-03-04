@@ -23,7 +23,9 @@
                 </queues-table>
             </v-flex>
         </v-layout>
-        <dialog-template></dialog-template>
+        <dialog-template @action="handleDialogAction">
+            ... ... ...
+        </dialog-template>
     </v-container>
 </template>
 
@@ -35,12 +37,14 @@
     import { mapGetters, mapActions } from 'vuex';
     import QueuesTable from './table.vue';
     import DialogTemplate from '../../components/dialog';
+    import InputFormQueue from './input_form';
 
     export default {
         name: 'queues-index',
         components: {
             QueuesTable,
-            DialogTemplate
+            DialogTemplate,
+            InputFormQueue
         },
         computed: {
             ...mapGetters([
@@ -57,8 +61,30 @@
         },
         methods: {
             ...mapActions([
-                'set_dialog'
-            ])
+                'set_dialog',
+                'reset_dialog'
+            ]),
+            showDialog(content) {
+                this.set_dialog(['content', content]);
+                let dialog_title = _.capitalize(this.$i18n.messages[this.locale]['add_queue_dialog_title']);
+                this.set_dialog(['title', dialog_title]);
+                let dialog_actions = [
+                    {  name: 'cancel', text: this.$i18n.messages[this.locale]['cancel'], color: 'tertiary' },
+                    { name: 'add', text: this.$i18n.messages[this.locale]['add'], color: 'secondary' }
+                ];
+                this.set_dialog(['actions', dialog_actions]);
+                return this.set_dialog(['show', true]);
+            },
+            handleDialogAction(action_name) {
+                switch (action_name) {
+                    case 'cancel':
+                        this.set_dialog(['show', false]);
+                        setTimeout(() => {
+                            return this.reset_dialog();
+                        }, 500);
+                        break;
+                }
+            }
         },
         mounted() {
             this.$i18n.locale = this.locale;
@@ -70,11 +96,17 @@
     {
         "id": {
             "to_mainpage": "halaman depan",
-            "add_queue": "daftar"
+            "add_queue": "daftar",
+            "add_queue_dialog_title": "tambah antrian",
+            "cancel": "batal",
+            "add": "tambah"
         },
         "en": {
             "to_mainpage": "mainpage",
-            "add_queue": "add"
+            "add_queue": "add",
+            "add_queue_dialog_title": "add queue",
+            "cancel": "cancel",
+            "add": "add"
         }
     }
 </i18n>
