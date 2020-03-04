@@ -7,7 +7,7 @@
                     <v-icon left>fa-chevron-left</v-icon>{{ $t('to_mainpage') }}
                 </v-btn>
                 <v-btn small color="secondary"
-                       :disabled="!buttons.add">
+                       :disabled="!buttons.add_queue">
                     <v-icon left>fa-plus</v-icon>{{ $t('add_queue') }}
                 </v-btn>
             </v-flex>
@@ -38,23 +38,20 @@
         components: {
             QueuesTable
         },
-        data() {
-            return {
-                buttons: {
-                    add: false
-                }
-            };
-        },
         computed: {
             ...mapGetters([
                 'locale',
-                'queues'
+                'queues',
+                'buttons'
             ])
         },
         watch: {
             'locale'(value) {
                 return this.$i18n.locale = value;
             }
+        },
+        mounted() {
+            this.$i18n.locale = this.locale;
         }
     }
 </script>

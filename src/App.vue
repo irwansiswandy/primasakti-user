@@ -151,6 +151,7 @@
         computed: {
             ...mapGetters([
                 'locale',
+                'buttons',
                 'server_date',
                 'server_time',
                 'business_hours',
@@ -209,6 +210,7 @@
         methods: {
             ...mapActions([
                 'set_locale',
+                'set_button',
                 'init_server_datetime',
                 'init_admins',
                 'init_queues',
@@ -222,6 +224,9 @@
                     method: 'get'
                 })
                 .then((response) => {
+                    if (response.data.local) {
+                        this.set_button(['add_queue', true]);
+                    }
                     return this.init_server_datetime(response.data);
                 })
                 .catch((error) => {

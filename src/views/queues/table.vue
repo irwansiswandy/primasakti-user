@@ -9,14 +9,29 @@
             <td class="text-xs-left">
                 {{ props.item.number }}
             </td>
-            <td>
-                -
+            <td class="text-xs-left">
+                {{ props.item.name }}
             </td>
-            <td>
-                -
+            <td class="text-xs-center">
+                <v-chip label small dark color="error"
+                        v-if="props.item.waiting && !props.item.handled && !props.item.finished">
+                    {{ formatChipText($t('queuing')) }}
+                </v-chip>
+                <v-chip label small dark color="info"
+                        v-else-if="props.item.waiting && props.item.handled && !props.item.finished">
+                    {{ formatChipText($t('handled')) }}
+                </v-chip>
+                <v-chip label small dark color="success"
+                        v-else-if="props.item.waiting && props.item.handled && props.item.finished">
+                    {{ formatChipText($t('finished')) }}
+                </v-chip>
             </td>
             <td class="text-xs-right">
-                {{ props.item.created_at }}
+                {{ formatDateTime(props.item.created_at) }}
+                <br>
+                <span class="caption tertiary--text">
+                    {{ getFromNow(props.item.created_at) }}
+                </span>
             </td>
         </template>
     </v-data-table>
@@ -66,9 +81,9 @@
             },
             table_headers() {
                 return [
-                    { text: 'NO', name: 'number', value: 'number', sortable: true },
-                    { text: 'NAMA' },
-                    { text: 'STATUS' },
+                    { text: 'NO', value: 'number', align: 'left', sortable: true },
+                    { text: 'NAMA', value: 'name', align: 'left', sortable: true },
+                    { text: 'STATUS', value: 'status', align: 'center' },
                     { text: 'WAKTU MULAI', align: 'right' }
                 ];
             },
@@ -82,6 +97,40 @@
                 }
                 return _items;
             }
+        },
+        watch: {
+            'locale'(value) {
+                return this.$i18n.locale = value;
+            }
+        },
+        methods: {
+            formatDateTime(date_time) {
+                return moment(date_time, 'YYYY-MM-DD HH:mm:ss').locale(this.locale).format('DD/MM/YYYY HH:mm:ss');
+            },
+            formatChipText(text) {
+                return _.upperCase(text);
+            },
+            getFromNow(date_time) {
+                return moment(date_time, 'YYYY-MM-DD HH:mm:ss').locale(this.locale).fromNow();
+            }
+        },
+        mounted() {
+            this.$i18n.locale = this.locale;
         }
     }
 </script>
+
+<i18n>
+    {
+        "id": {
+            "queuing": "antri",
+            "handled": "dilayani",
+            "finished": "selesai"
+        },
+        "en": {
+            "queuing": "queuing",
+            "handled": "handled",
+            "finished": "finished"
+        }
+    }
+</i18n>

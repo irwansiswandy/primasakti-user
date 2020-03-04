@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
-import Locale from './vuex_modules/locale.js';
+import UI from './vuex_modules/ui';
 import ServerDateTime from './vuex_modules/server_datetime.js';
 import Admins from './vuex_modules/admins.js';
 import ServerResponse from './vuex_modules/server_response.js';
@@ -14,7 +14,7 @@ import Dialog from './vuex_modules/dialog.js';
 
 export default new Vuex.Store({
     modules: {
-        'locale': Locale,
+        'ui': UI,
         'server_datetime': ServerDateTime,
         'admins': Admins,
         'server_response': ServerResponse,

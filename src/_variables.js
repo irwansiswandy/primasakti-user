@@ -1,6 +1,6 @@
 window._ = require('lodash');
 
-const ServerHostname = 'http://localhost:81/';
+const ServerHostname = 'http://192.168.0.244:81/';
 // const ServerHostname = 'http://primasakti-network.ddns.net:281/';
 const BaseApiURL = ServerHostname + 'api/';
 
