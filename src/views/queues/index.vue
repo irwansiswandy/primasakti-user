@@ -7,7 +7,8 @@
                     <v-icon left>fa-chevron-left</v-icon>{{ $t('to_mainpage') }}
                 </v-btn>
                 <v-btn small color="secondary"
-                       :disabled="!buttons.add_queue">
+                       :disabled="!buttons.add_queue"
+                       @click="showDialog('new_queue')">
                     <v-icon left>fa-plus</v-icon>{{ $t('add_queue') }}
                 </v-btn>
             </v-flex>
@@ -22,6 +23,7 @@
                 </queues-table>
             </v-flex>
         </v-layout>
+        <dialog-template></dialog-template>
     </v-container>
 </template>
 
@@ -30,25 +32,33 @@
 </style>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import QueuesTable from './table.vue';
+    import DialogTemplate from '../../components/dialog';
 
     export default {
         name: 'queues-index',
         components: {
-            QueuesTable
+            QueuesTable,
+            DialogTemplate
         },
         computed: {
             ...mapGetters([
                 'locale',
                 'queues',
-                'buttons'
+                'buttons',
+                'dialog'
             ])
         },
         watch: {
             'locale'(value) {
                 return this.$i18n.locale = value;
             }
+        },
+        methods: {
+            ...mapActions([
+                'set_dialog'
+            ])
         },
         mounted() {
             this.$i18n.locale = this.locale;

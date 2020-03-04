@@ -34,6 +34,13 @@
                 </span>
             </td>
         </template>
+        <!--
+        <template slot="footer">
+            <td colspan="4">
+                {{ formatChipText($t('queuing')) + ' (' + queues.waiting.length + ')' }}
+            </td>
+        </template>
+        -->
     </v-data-table>
 </template>
 
