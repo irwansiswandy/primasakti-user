@@ -1,19 +1,23 @@
 window._ = require('lodash');
 
-const ServerHostname = 'http://localhost:81/';
-// const ServerHostname = 'http://primasakti-network.ddns.net:281/';
+/* SERVER CONFIGURATION
+*/
+// const ServerHostname = 'http://192.168.0.1:82/';
+const ServerHostname = 'http://primasakti.ddns.net:2182/';
 const BaseApiURL = ServerHostname + 'api/';
 
 /* PUSHER CONFIGURATION
  */
-const PUSHER_SERVER_HOST = '192.168.0.2';
-const PUSHER_SERVER_PORT = 6001;
+// const PUSHER_SERVER_HOST = '192.168.0.1';
+// const PUSHER_SERVER_PORT = 6001;
+const PUSHER_SERVER_HOST = 'primasakti.ddns.net';
+const PUSHER_SERVER_PORT = 2160;
 const PUSHER_SETTINGS = {
-    key: '937c40c45b8b04b84c49',
-    cluster: 'ap1',
-    channel: 'primasakti-user',
     host: PUSHER_SERVER_HOST,
-    port: PUSHER_SERVER_PORT
+    port: PUSHER_SERVER_PORT,
+    key: 'UV8MXUXlskm2okdsoPdTl5Bc',
+    channel: 'primasakti-user'
+    // cluster: 'ap1',
 };
 
 export {
