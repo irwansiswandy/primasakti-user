@@ -11,7 +11,7 @@
     "axios-retry": "^3.1.2",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.23.0",
     "pusher-js": "^4.4.0",
